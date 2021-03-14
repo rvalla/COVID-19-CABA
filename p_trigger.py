@@ -8,3 +8,5 @@ print("---------------------------------------------", end="\n")
 
 ecalls.plot_calls_ratios()
 ecalls.plot_calls_ratios_avg()
+ecalls.plot_total_calls()
+ecalls.plot_total_calls_avg()
