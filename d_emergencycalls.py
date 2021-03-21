@@ -29,6 +29,7 @@ def save():
 	print("-- Processed csv file saved!                 ", end="\n")
 
 def run():
+	print("-- Processing emergency calls data...", end="\n")
 	add_averages()
 	add_ratios()
 	save()
