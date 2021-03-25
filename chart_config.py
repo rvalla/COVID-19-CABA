@@ -21,10 +21,10 @@ plot_scale = "linear"
 legend_text_size = 8
 start_date = "2021-01-01"
 
-def save_plot(name, figure):
+def save_plot(name, figure, code):
 	plt.yscale(plot_scale)
 	plt.tight_layout()
-	plt.savefig(chart_path + str(language) + "_" + name + ".png", facecolor=figure.get_facecolor())
+	plt.savefig(chart_path + code + "_" + str(language) + "_" + name + ".png", facecolor=figure.get_facecolor())
 	print("-- The chart was saved!", end="\n")
 
 def grid_and_ticks(yMax, ticksinterval):
