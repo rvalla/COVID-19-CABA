@@ -15,3 +15,7 @@ ecalls.plot_total_calls_avg()
 
 #Building vaccination champaign charts
 vac.plot_total_vac_by_sex()
+vac.plot_total_vac_by_dose()
+vac.plot_doses_by_age()
+vac.plot_doses_by_age_avg()
+vac.plot_doses_by_vac_avg()
