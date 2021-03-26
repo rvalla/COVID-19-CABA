@@ -1,2 +1,7 @@
 .DS_Store
 __pycache__
+datasets/casos_covid19.csv
+datasets/contactos_boti_triage_covid19.csv
+datasets/dataset_flujo_vehicular.csv
+datasets/dataset_reporte_covid_sitio_gobierno.csv
+datasets/dataset_turnos_detalle.csv

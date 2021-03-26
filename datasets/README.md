@@ -1,8 +1,8 @@
 # COVID-19 data (Buenos Aires City)
 
-The *datasets* in */datasets* are unchanged. You can download the latest ones directly from
-[data.buenosaires.gob.ar](https://data.buenosaires.gob.ar/dataset?groups=covid-19). These particular
-*datasets* are:
+The *datasets* in */datasets* are unchanged so I won't update these files. You can download the latest ones
+directly from [data.buenosaires.gob.ar](https://data.buenosaires.gob.ar/dataset?groups=covid-19). Some datasets
+about *COVID-19* outbreak in Buenos Aires are:
 
 - [Emergency calls data](https://data.buenosaires.gob.ar/dataset/llamados-107-covid)
 - [Tests: Turism related](https://data.buenosaires.gob.ar/dataset/testeos-de-covid-19-por-turismo)
