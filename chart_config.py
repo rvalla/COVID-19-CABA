@@ -13,6 +13,8 @@ background_plot = "silver" #Default background color for charts
 background_figure = "white" #Default background color for figures
 major_grid_color = "dimgrey" #Default colors for grids...
 minor_grid_color = "dimgray"
+colors = ["tab:red", "tab:blue", "tab:green", "limegreen", "orange", "indianred", "teal", "darkslategray", \
+			"mediumseagreen", "orangered", "goldenrod", "dimgrey", "whitesmoke"]
 alphaMGC = 0.7
 alphamGC = 0.9
 image_resolution = 120
@@ -39,6 +41,15 @@ def grid_and_ticks(yMax, ticksinterval):
 	plt.yticks(np.arange(0, yMax, ticksinterval))
 	plt.gca().set_facecolor(background_plot)
 
+def x_grid_and_ticks(yMax, ticksinterval):
+	plt.grid(which='both', axis='x')
+	plt.minorticks_on()
+	plt.grid(True, "major", "x", ls="-", lw=0.8, c=major_grid_color, alpha=alphaMGC)
+	plt.grid(True, "minor", "x", ls="--", lw=0.3, c=minor_grid_color, alpha=alphamGC)
+	plt.xticks(fontsize=6)
+	plt.yticks(fontsize=6)
+	plt.gca().set_facecolor(background_plot)
+
 def ticks_locator(weekInterval):
 	plt.gca().xaxis.set_minor_locator(tk.AutoMinorLocator(7))
 	plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator(interval = weekInterval))
@@ -53,3 +64,9 @@ def build_texts(title, x_axis, y_axis):
 def build_legend():
 	plt.legend(loc=0, shadow = True, facecolor = background_figure,
 			prop={'family' : legend_font, 'size' : legend_text_size})
+
+def build_legends(axis_a, axis_b):
+	a, al = axis_a.get_legend_handles_labels()
+	b, bl = axis_b.get_legend_handles_labels()
+	axis_b.legend(a + b, al + bl, loc=0, shadow = True, facecolor = background_figure,
+				prop={'family' : legend_font, 'size' : legend_text_size})
