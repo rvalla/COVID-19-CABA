@@ -6,9 +6,9 @@ demographics = pd.read_csv("demographics_c.csv")
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-03-25"
+end_date = "2021-03-28"
 period = pd.date_range(start_date, end_date)
-csv_lines = 3256
+csv_lines = 3375
 lines_step = 1500
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
 
