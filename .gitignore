@@ -5,3 +5,5 @@ datasets/contactos_boti_triage_covid19.csv
 datasets/dataset_flujo_vehicular.csv
 datasets/dataset_reporte_covid_sitio_gobierno.csv
 datasets/dataset_turnos_detalle.csv
+datasets/llamados_107_covid.csv
+datasets/dataset_total_vacunas.csv

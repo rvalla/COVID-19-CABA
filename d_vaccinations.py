@@ -1,14 +1,15 @@
+import math
 import util as ut
 import pandas as pd
 
 #Importing demographics data...
-demographics = pd.read_csv("demographics_c.csv")
+#demographics = pd.read_csv("demographics_c.csv")
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-03-28"
+end_date = "2021-04-01"
 period = pd.date_range(start_date, end_date)
-csv_lines = 3375
+csv_lines = 3597
 lines_step = 1500
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
 
@@ -79,9 +80,10 @@ def run():
 	print("-- Processing vaccination campaign data...", end="\n")
 	#Variables to control sub_datasets
 	step = 0
+	steps = math.ceil(csv_lines/lines_step)
 	done_lines = 1
 	while step * lines_step < csv_lines:
-		print("-- Step " + str(step) + " completed...", end="\r")
+		print("-- Step " + str(step + 1) + " of " + str(steps) + " completed...", end="\r")
 		if done_lines + lines_step >= csv_lines - 1:
 			lines = csv_lines - done_lines - 1
 		else:
