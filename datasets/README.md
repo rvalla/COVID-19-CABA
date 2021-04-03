@@ -13,5 +13,9 @@ about *COVID-19* outbreak in Buenos Aires are:
 - [Virtual triage](https://data.buenosaires.gob.ar/dataset/contactos-boti-triage-covid-19)
 - [COVID-19 cases](https://data.buenosaires.gob.ar/dataset/casos-covid-19)
 
+For categories which need projected population data I am using [official projection 2010-2040]
+(https://data.buenosaires.gob.ar/dataset/d816d4e7-472c-432d-a6a4-f7fa7e78f508/archivo/6de546ba-8509-484e-bbf7-2be708da8ac8)
+taking into account 2020 values.  
+
 Feel free to contact me by [mail](mailto:rodrigovalla@protonmail.ch) or reach me in
 [telegram](https://t.me/rvalla) or [mastodon](https://fosstodon.org/@rvalla).
