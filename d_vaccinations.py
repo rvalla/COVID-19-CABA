@@ -3,7 +3,8 @@ import util as ut
 import pandas as pd
 
 #Importing demographics data...
-#demographics = pd.read_csv("demographics_c.csv")
+demographics = pd.read_csv("demographics_v.csv")
+demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
@@ -17,12 +18,12 @@ csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFE
 age_in = ["30 o menos","31 a 40","41 a 50","51 a 60","61 a 70","71 a 80","81 a 90","91 o mas"]
 age_k = {"30 o menos":"<=30","31 a 40":"31-40","41 a 50":"41-50","51 a 60":"51-60",
 			"61 a 70":"61-70","71 a 80":"71-80","81 a 90":"81-90","91 o mas":">=91"}
-age_c_d = ["<=30A","<=30B","<=30","31-40A","31-40B","31-40","41-50A","41-50B","41-50","51-60A","51-60B","51-60",
-		"61-70A","61-70B","61-70","71-80A","71-80B","71-80","81-90A","81-90B","81-90",">=91A",">=91B",">=91",
-		"TotalA","TotalB","Total"]
-age_c_s = ["<=30M","<=30F","<=30","31-40M","31-40F","31-40","41-50M","41-50F","41-50","51-60M","51-60F","51-60",
-		"61-70M","61-70F","61-70","71-80M","71-80F","71-80","81-90M","81-90F","81-90",">=91M",">=91F",">=91",
-		"TotalM","TotalF","Total"]
+age_c_d = ["TotalA","TotalB","Total","<=30A","<=30B","<=30","31-40A","31-40B","31-40","41-50A","41-50B","41-50",
+		"51-60A","51-60B","51-60","61-70A","61-70B","61-70","71-80A","71-80B","71-80","81-90A","81-90B","81-90",
+		">=91A",">=91B",">=91"]
+age_c_s = ["TotalM","TotalF","Total","<=30M","<=30F","<=30","31-40M","31-40F","31-40","41-50M","41-50F","41-50",
+		"51-60M","51-60F","51-60","61-70M","61-70F","61-70","71-80M","71-80F","71-80","81-90M","81-90F","81-90",
+		">=91M",">=91F",">=91"]
 d_age_dose = pd.DataFrame(0, index=period, columns=age_c_d)
 d_age_sex = pd.DataFrame(0, index=period, columns=age_c_s)
 d_age_dose.index.name = "FECHA"
@@ -110,20 +111,53 @@ def save_processed_data():
 	d_age_dose.to_csv("processed/vaccinationbyageanddose.csv")
 	d_age_sex.to_csv("processed/vaccinationbyageandsex.csv")
 	d_vac.to_csv("processed/vaccinationbyvaccine.csv")
-	build_cum_sums()
-	build_averages()
+	cum_age_dose = d_age_dose.cumsum()
+	cum_age_dose.to_csv("processed/cum_vaccinationbyageanddose.csv")
+	cum_age_sex = d_age_Sex.cumsum()
+	cum_age_sex.to_csv("processed/cum_vaccinationbyageandsex.csv")
+	cum_vac = d_vac.cumsum()
+	cum_vac.to_csv("processed/cum_vaccinationbyvaccine.csv")
+	d_age_dose_avg = ut.build_averages(d_age_dose, 7)
+	d_age_dose_avg.to_csv("processed/vaccinationbyageanddoseavg.csv")
+	d_vac_avg = ut.build_averages(d_vac, 7)
+	d_vac_avg.to_csv("processed/vaccinationbyvaccineavg.csv")
+	build_reached_population_by_sex(cum_age_sex)
+	build_reached_population_by_dose(cum_age_dose)
 	print("-- Processed csv files saved!                 ", end="\n")
 
-def build_cum_sums():
-	cum_age_dose = d_age_dose.cumsum()
-	cum_age_sex = d_age_sex.cumsum()
-	cum_vac = d_vac.cumsum()
-	cum_age_dose.to_csv("processed/cum_vaccinationbyageanddose.csv")
-	cum_age_sex.to_csv("processed/cum_vaccinationbyageandsex.csv")
-	cum_vac.to_csv("processed/cum_vaccinationbyvaccine.csv")
+#This process the data in place so is necessary to save the .csv file before.
+def build_reached_population_by_sex(cum_data):
+	cum_data[">=81M"] = cum_data["81-90M"] + cum_data[">=91M"]
+	cum_data[">=81F"] = cum_data["81-90F"] + cum_data[">=91F"]
+	cum_data[">=81"] = cum_data["81-90"] + cum_data[">=91"]
+	del cum_data["81-90M"]
+	del cum_data["81-90F"]
+	del cum_data["81-90"]
+	del cum_data[">=91M"]
+	del cum_data[">=91F"]
+	del cum_data[">=91"]
+	ages = ["<=30","31-40","41-50","51-60","61-70","71-80",">=81","Total"]
+	for c in ages:
+		cum_data[c + "M"] = cum_data[c + "M"] / demographics.loc[c, "Men"]
+		cum_data[c + "F"] = cum_data[c + "F"] / demographics.loc[c, "Women"]
+		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
+	cum_data.set_index("FECHA", inplace=True)
+	cum_data.to_csv("processed/reached_vaccinationbyageandsex.csv")
 
-def build_averages():
-	d_age_dose_avg = ut.build_averages(d_age_dose, 7)
-	d_vac_avg = ut.build_averages(d_vac, 7)
-	d_age_dose_avg.to_csv("processed/vaccinationbyageanddoseavg.csv")
-	d_vac_avg.to_csv("processed/vaccinationbyvaccineavg.csv")
+def build_reached_population_by_dose(cum_data):
+	cum_data[">=81A"] = cum_data["81-90A"] + cum_data[">=91A"]
+	cum_data[">=81B"] = cum_data["81-90B"] + cum_data[">=91B"]
+	cum_data[">=81"] = cum_data["81-90"] + cum_data[">=91"]
+	del cum_data["81-90A"]
+	del cum_data["81-90B"]
+	del cum_data["81-90"]
+	del cum_data[">=91A"]
+	del cum_data[">=91B"]
+	del cum_data[">=91"]
+	ages = ["<=30","31-40","41-50","51-60","61-70","71-80",">=81","Total"]
+	for c in ages:
+		cum_data[c + "A"] = cum_data[c + "A"] / demographics.loc[c, "Both"]
+		cum_data[c + "B"] = cum_data[c + "B"] / demographics.loc[c, "Both"]
+		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
+	cum_data.set_index("FECHA", inplace=True)
+	cum_data.to_csv("processed/reached_vaccinationbyageanddose.csv")
