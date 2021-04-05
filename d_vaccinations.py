@@ -8,9 +8,9 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-04-01"
+end_date = "2021-04-04"
 period = pd.date_range(start_date, end_date)
-csv_lines = 3597
+csv_lines = 3693
 lines_step = 1500
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
 
@@ -113,7 +113,7 @@ def save_processed_data():
 	d_vac.to_csv("processed/vaccinationbyvaccine.csv")
 	cum_age_dose = d_age_dose.cumsum()
 	cum_age_dose.to_csv("processed/cum_vaccinationbyageanddose.csv")
-	cum_age_sex = d_age_Sex.cumsum()
+	cum_age_sex = d_age_sex.cumsum()
 	cum_age_sex.to_csv("processed/cum_vaccinationbyageandsex.csv")
 	cum_vac = d_vac.cumsum()
 	cum_vac.to_csv("processed/cum_vaccinationbyvaccine.csv")
@@ -141,7 +141,7 @@ def build_reached_population_by_sex(cum_data):
 		cum_data[c + "M"] = cum_data[c + "M"] / demographics.loc[c, "Men"]
 		cum_data[c + "F"] = cum_data[c + "F"] / demographics.loc[c, "Women"]
 		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
-	cum_data.set_index("FECHA", inplace=True)
+	#cum_data.set_index("FECHA", inplace=True)
 	cum_data.to_csv("processed/reached_vaccinationbyageandsex.csv")
 
 def build_reached_population_by_dose(cum_data):
@@ -159,5 +159,5 @@ def build_reached_population_by_dose(cum_data):
 		cum_data[c + "A"] = cum_data[c + "A"] / demographics.loc[c, "Both"]
 		cum_data[c + "B"] = cum_data[c + "B"] / demographics.loc[c, "Both"]
 		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
-	cum_data.set_index("FECHA", inplace=True)
+	#cum_data.set_index("FECHA", inplace=True)
 	cum_data.to_csv("processed/reached_vaccinationbyageanddose.csv")
