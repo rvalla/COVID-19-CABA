@@ -1,6 +1,13 @@
 import math
+import time as tm
 import util as ut
 import pandas as pd
+
+#Saving the moment in which this process start
+start_time = tm.time()
+
+#Output path:
+output_path = "processed/"
 
 #Importing demographics data...
 demographics = pd.read_csv("demographics_v.csv")
@@ -8,13 +15,14 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-04-05"
+end_date = "2021-04-08"
 period = pd.date_range(start_date, end_date)
-csv_lines = 3867
+csv_lines = 3999
 lines_step = 1500
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
 
 #Building blank dataframe for organizing data by age
+ages = ["<=30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
 age_in = ["30 o menos","31 a 40","41 a 50","51 a 60","61 a 70","71 a 80","81 a 90","91 o mas"]
 age_k = {"30 o menos":"<=30","31 a 40":"31-40","41 a 50":"41-50","51 a 60":"51-60",
 			"61 a 70":"61-70","71 a 80":"71-80","81 a 90":"81-90","91 o mas":">=91"}
@@ -34,13 +42,8 @@ def by_age_and_dose(in_data, out_df, date):
 	key = get_age_key(in_data["GRUPO_ETARIO"])
 	d1 = in_data["DOSIS_1"]
 	d2 = in_data["DOSIS_2"]
-	t = d1 + d2
 	out_df.loc[date,key + "A"] += d1
-	out_df.loc[date,"Total" + "A"] += d1
 	out_df.loc[date,key + "B"] += d2
-	out_df.loc[date,"Total" + "B"] += d2
-	out_df.loc[date,key] += t
-	out_df.loc[date,"Total"] += t
 
 def by_age_and_sex(in_data, out_df, date):
 	key = get_age_key(in_data["GRUPO_ETARIO"])
@@ -49,19 +52,16 @@ def by_age_and_sex(in_data, out_df, date):
 	t = d1 + d2
 	if in_data["GENERO"] == "M":
 		out_df.loc[date,key + "M"] += t
-		out_df.loc[date,"Total" + "M"] += t
 	elif in_data["GENERO"] == "F":
 		out_df.loc[date,key + "F"] += t
-		out_df.loc[date,"Total" + "F"] += t
-	out_df.loc[date,key] += t
-	out_df.loc[date,"Total"] += t
 
 def get_age_key(in_key):
 	return age_k[in_key]
 
 #Building blank dataframe for organizing data by vaccine
+vaccines = ["Sputnik", "Covishield", "Sinopharm", "AstraZeneca"]
 vac_in = {"Sputnik": "Sputnik", "Covishield": "Covishield", "Sinopharm": "Sinopharm",
-			"vacuna Coronavirus (AstraZeneca) 1ra - 2da dosis, vial x 10 dosis": "AstraZeneca"}
+			"AstraZeneca": "AstraZeneca"}
 vac_c = ["SputnikA", "SputnikB", "Sputnik", "CovishieldA", "CovishieldB", "Covishield",
 			"SinopharmA", "SinopharmB", "Sinopharm", "AstraZenecaA", "AstraZenecaB", "AstraZeneca",
 			"TotalA", "TotalB", "Total"]
@@ -69,16 +69,12 @@ d_vac = pd.DataFrame(0, index=period, columns=vac_c)
 d_vac.index.name = "FECHA"
 
 def by_vaccine(in_data, out_df, date):
-	key = get_vac_key(in_data.loc["VACUNA"])
+	#key = get_vac_key(in_data.loc["VACUNA"])
+	key = in_data.loc["VACUNA"]
 	d1 = in_data["DOSIS_1"]
 	d2 = in_data["DOSIS_2"]
-	t = d1 + d2
 	out_df.loc[date,key + "A"] += d1
-	out_df.loc[date,"Total" + "A"] += d1
 	out_df.loc[date,key + "B"] += d2
-	out_df.loc[date,"Total" + "B"] += d2
-	out_df.loc[date,key] += t
-	out_df.loc[date,"Total"] += t
 
 def get_vac_key(vac_field):
 	return vac_in[vac_field]
@@ -102,6 +98,7 @@ def run():
 		done_lines += lines
 		step += 1
 	print("-- A total of " + str(done_lines) + " lines where processed.", end="\n")
+	complete_data_sums()
 	save_processed_data()
 
 def process_data(vac_data):
@@ -112,24 +109,39 @@ def process_data(vac_data):
 		by_age_and_sex(row, d_age_sex, date)
 		by_vaccine(row, d_vac, date)
 
+def complete_data_sums():
+	data_sums(d_age_dose, ages, ["A","B"])
+	data_sums(d_age_sex, ages, ["M","F"])
+	data_sums(d_vac, vaccines, ["A","B"])
+
+def data_sums(in_df, in_c, in_l):
+	for c in in_c:
+		a = in_df[c + in_l[0]]
+		b = in_df[c + in_l[1]]
+		in_df[c] = a + b
+		in_df["Total" + in_l[0]] += a
+		in_df["Total" + in_l[1]] += b
+	in_df["Total"] = in_df["Total" + in_l[0]] + in_df["Total" + in_l[1]]
+
 def save_processed_data():
 	print("-- Saving csv files...", end="\r")
-	d_age_dose.to_csv("processed/vaccinationbyageanddose.csv")
-	d_age_sex.to_csv("processed/vaccinationbyageandsex.csv")
-	d_vac.to_csv("processed/vaccinationbyvaccine.csv")
+	d_age_dose.to_csv(output_path + "vaccinationbyageanddose.csv")
+	d_age_sex.to_csv(output_path + "vaccinationbyageandsex.csv")
+	d_vac.to_csv(output_path + "vaccinationbyvaccine.csv")
 	cum_age_dose = d_age_dose.cumsum()
-	cum_age_dose.to_csv("processed/cum_vaccinationbyageanddose.csv")
+	cum_age_dose.to_csv(output_path + "cum_vaccinationbyageanddose.csv")
 	cum_age_sex = d_age_sex.cumsum()
-	cum_age_sex.to_csv("processed/cum_vaccinationbyageandsex.csv")
+	cum_age_sex.to_csv(output_path + "cum_vaccinationbyageandsex.csv")
 	cum_vac = d_vac.cumsum()
-	cum_vac.to_csv("processed/cum_vaccinationbyvaccine.csv")
+	cum_vac.to_csv(output_path + "cum_vaccinationbyvaccine.csv")
 	d_age_dose_avg = ut.build_averages(d_age_dose, 7)
-	d_age_dose_avg.to_csv("processed/vaccinationbyageanddoseavg.csv")
+	d_age_dose_avg.to_csv(output_path + "vaccinationbyageanddoseavg.csv")
 	d_vac_avg = ut.build_averages(d_vac, 7)
-	d_vac_avg.to_csv("processed/vaccinationbyvaccineavg.csv")
+	d_vac_avg.to_csv(output_path + "vaccinationbyvaccineavg.csv")
 	build_reached_population_by_sex(cum_age_sex)
 	build_reached_population_by_dose(cum_age_dose)
 	print("-- Processed csv files saved!                 ", end="\n")
+	print("-- This took " + str(get_time(start_time, tm.time())))
 
 #This process the data in place so is necessary to save the .csv file before.
 def build_reached_population_by_sex(cum_data):
@@ -142,13 +154,13 @@ def build_reached_population_by_sex(cum_data):
 	del cum_data[">=91M"]
 	del cum_data[">=91F"]
 	del cum_data[">=91"]
-	ages = ["<=30","31-40","41-50","51-60","61-70","71-80",">=81","Total"]
-	for c in ages:
+	ages_r = ["<=30","31-40","41-50","51-60","61-70","71-80",">=81","Total"]
+	for c in ages_r:
 		cum_data[c + "M"] = cum_data[c + "M"] / demographics.loc[c, "Men"]
 		cum_data[c + "F"] = cum_data[c + "F"] / demographics.loc[c, "Women"]
 		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
 	#cum_data.set_index("FECHA", inplace=True)
-	cum_data.to_csv("processed/reached_vaccinationbyageandsex.csv")
+	cum_data.to_csv(output_path + "reached_vaccinationbyageandsex.csv")
 
 def build_reached_population_by_dose(cum_data):
 	cum_data[">=81A"] = cum_data["81-90A"] + cum_data[">=91A"]
@@ -166,4 +178,20 @@ def build_reached_population_by_dose(cum_data):
 		cum_data[c + "B"] = cum_data[c + "B"] / demographics.loc[c, "Both"]
 		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
 	#cum_data.set_index("FECHA", inplace=True)
-	cum_data.to_csv("processed/reached_vaccinationbyageanddose.csv")
+	cum_data.to_csv(output_path + "reached_vaccinationbyageanddose.csv")
+
+#Calculating time needed to processed the data..
+def get_time(start_time, end_time):
+	time = end_time - start_time
+	formated_time = format_time(time)
+	return formated_time
+
+def format_time(time):
+	ms = ""
+	minutes = time // 60
+	seconds = time - minutes * 60
+	seconds = round(seconds, 2)
+	ms = "{:02d}".format(int(minutes))
+	ms += ":"
+	ms += "{:05.2f}".format(seconds)
+	return ms
