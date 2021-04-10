@@ -1,5 +1,6 @@
 import d_emergencycalls as ecalls
 import d_vaccinations as vac
+import d_cases as cases
 
 print("#############################################", end="\n")
 print("   COVID-19: Buenos Aires city open data     ", end="\n")
@@ -10,5 +11,8 @@ print("---------------------------------------------", end="\n")
 #Building data from emergency calls
 ecalls.run()
 
-#print("-- Processing vaccination campaign data...", end="\n")
+#Building data from vaccination champaing dataset
 vac.run()
+
+#Building data from cases dataset
+cases.run()

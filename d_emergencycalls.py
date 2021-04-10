@@ -1,5 +1,9 @@
+import time as tm
 import util as ut
 import pandas as pd
+
+#Saving the moment in which this process start
+start_time = tm.time()
 
 #Importing data from llamados_107_covid.csv
 calls_data = pd.read_csv("datasets/llamados_107_covid.csv")
@@ -27,9 +31,26 @@ def add_ratios():
 def save():
 	calls_data.to_csv("processed/emergencycalls.csv")
 	print("-- Processed csv file saved!                 ", end="\n")
+	print("-- This took " + str(get_time(start_time, tm.time())))
 
 def run():
 	print("-- Processing emergency calls data...", end="\n")
 	add_averages()
 	add_ratios()
 	save()
+
+#Calculating time needed to processed the data..
+def get_time(start_time, end_time):
+	time = end_time - start_time
+	formated_time = format_time(time)
+	return formated_time
+
+def format_time(time):
+	ms = ""
+	minutes = time // 60
+	seconds = time - minutes * 60
+	seconds = round(seconds, 2)
+	ms = "{:02d}".format(int(minutes))
+	ms += ":"
+	ms += "{:05.2f}".format(seconds)
+	return ms

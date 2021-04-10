@@ -6,8 +6,8 @@ import pandas as pd
 #Saving the moment in which this process start
 start_time = tm.time()
 
-#Importing demographics data...
-#demographics = pd.read_csv("demographics_c.csv")
+#Output path:
+output_path = "processed/"
 
 filename = "casos_covid19.csv"
 data_type = ["confirmed", "deaths", "dropped"]
@@ -15,15 +15,17 @@ data_zone = []
 data_age = []
 age_errors = 0
 zone_errors = 0
+delay_errors = 0
 
 #Setting time period
 start_date = "2020-03-15"
-end_date = "2021-04-06"
+end_date = "2021-04-08"
 period = pd.date_range(start_date, end_date)
-csv_lines = 2027340
+csv_lines = 2053031
 lines_step = 5000
 age_cuts = [31,41,51,61,71,81,91,1000]
 age_keys = ["<=30", "31-40", "41-50", "51-60", "61-70", "71-80", "81-90", ">=91"]
+zone_keys = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"]
 csv_columns = ["numero_de_caso","fecha_apertura_snvs","fecha_toma_muestra","fecha_clasificacion","provincia","barrio",
 				"comuna","genero","edad","clasificacion","fecha_fallecimiento","fallecido","fecha_alta","tipo_contagio"]
 zone_c_s = ["1M","1F","1","2M","2F","2","3M","3F","3","4M","4F","4","5M","5F","5","6M","6F","6","7M","7F","7",
@@ -82,26 +84,21 @@ def add_case_by_age(in_data, out_df, date_s, delay):
 	key = get_age_key(in_data["edad"])
 	if in_data["genero"] == "femenino":
 		out_df.loc[date_s][key + "F"] += 1
-		out_df.loc[date_s]["TotalF"] += 1
 	elif in_data["genero"] == "masculino":
 		out_df.loc[date_s][key + "M"] += 1
-		out_df.loc[date_s]["TotalM"] += 1
-	out_df.loc[date_s][key] += 1
-	out_df.loc[date_s]["Total"] += 1
-	if delay > 0:
+	if delay >= 0:
 		out_df.loc[date_s]["DelayCount"] += 1
 		out_df.loc[date_s]["CumDelay"] += delay
+	else:
+		global delay_errors
+		delay_errors += 1
 
 def add_case_by_zone(in_data, out_df, date_s):
 	key = str(round(in_data["comuna"]))
 	if in_data["genero"] == "femenino":
 		out_df.loc[date_s][key + "F"] += 1
-		out_df.loc[date_s]["TotalF"] += 1
 	elif in_data["genero"] == "masculino":
 		out_df.loc[date_s][key + "M"] += 1
-		out_df.loc[date_s]["TotalM"] += 1
-	out_df.loc[date_s][key] += 1
-	out_df.loc[date_s]["Total"] += 1
 
 #Deciding age group...
 def get_age_key(in_key):
@@ -132,8 +129,10 @@ def run():
 		done_lines += lines
 		step += 1
 	print("-- A total of " + str(done_lines) + " lines where processed.", end="\n")
-	print("-- !!! Errors while processing by age: " + str(age_errors))
-	print("-- !!! Errors while processing by zone: " + str(zone_errors))
+	print("-- !!! Errors while processing by age: " + str(age_errors) + " (" + str(round((age_errors/csv_lines)*100,2)) + "%)")
+	print("-- !!! Errors while processing by zone: " + str(zone_errors) + " (" + str(round((zone_errors/csv_lines)*100,2)) + "%)")
+	print("-- !!! Errors while processing delays: " + str(delay_errors) + " (" + str(round((delay_errors/csv_lines)*100,2)) + "%)")
+	complete_data_sums()
 	save_processed_data()
 
 def process_data(c_data):
@@ -152,15 +151,29 @@ def process_data(c_data):
 def get_delay_avg(in_df):
 	in_df["DelayAvg"] = in_df["CumDelay"] / in_df["DelayCount"]
 
+def complete_data_sums():
+	for t in range(len(data_type)):
+		data_sums(data_age[t], age_keys, ["M","F"])
+		data_sums(data_zone[t], zone_keys, ["M","F"])
+
+def data_sums(in_df, in_c, in_l):
+	for c in in_c:
+		a = in_df[c + in_l[0]]
+		b = in_df[c + in_l[1]]
+		in_df[c] = a + b
+		in_df["Total" + in_l[0]] += a
+		in_df["Total" + in_l[1]] += b
+	in_df["Total"] = in_df["Total" + in_l[0]] + in_df["Total" + in_l[1]]
+
 def save_processed_data():
 	print("-- Preparing csv files...", end="\r")
 	for t in range(len(data_type)):
 		name = "cases_" + data_type[t]
 		get_delay_avg(data_age[t])
-		data_zone[t].to_csv("processed/" + name + "_byzone.csv")
-		data_age[t].to_csv("processed/" + name + "_byage.csv")
+		data_zone[t].to_csv(output_path + "" + name + "_byzone.csv")
+		data_age[t].to_csv(output_path + "" + name + "_byage.csv")
 		save_cum_sum(data_zone[t], name + "_byzone_cum.csv")
-		save_averages(data_zone[t], name + "_byage_avg.csv")
+		save_averages(data_zone[t], name + "_byzone_avg.csv")
 		save_averages(data_age[t], name + "_byage_avg.csv")
 		del data_age[t]["DelayAvg"]
 		del data_age[t]["CumDelay"]
@@ -171,11 +184,11 @@ def save_processed_data():
 
 def save_cum_sum(in_df, f_name):
 	cumsum = in_df.cumsum()
-	cumsum.to_csv("processed/" + f_name)
+	cumsum.to_csv(output_path + "" + f_name)
 
 def save_averages(in_df, f_name):
 	avg = ut.build_averages(in_df, 7)
-	avg.to_csv("processed/" + f_name)
+	avg.to_csv(output_path + f_name)
 
 #Calculating time needed to processed the data..
 def get_time(start_time, end_time):
