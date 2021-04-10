@@ -22,7 +22,8 @@ language = 1 #0 = english, 1 = spanish
 plot_scale = "linear"
 legend_text_size = 8
 start_date = "2021-01-01"
-end_date = "2021-04-01"
+e_start_date = "2020-03-15"
+end_date = "2021-04-08"
 
 def save_plot(name, figure, code):
 	plt.yscale(plot_scale)

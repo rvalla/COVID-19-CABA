@@ -1,6 +1,7 @@
 .DS_Store
 __pycache__
 testing.py
+testing/
 datasets/casos_covid19.csv
 datasets/contactos_boti_triage_covid19.csv
 datasets/dataset_flujo_vehicular.csv
