@@ -19,21 +19,21 @@ delay_errors = 0
 
 #Setting time period
 start_date = "2020-03-15"
-end_date = "2021-04-08"
+end_date = "2021-04-13"
 period = pd.date_range(start_date, end_date)
-csv_lines = 2053031
+csv_lines = 2092820
 lines_step = 5000
-age_cuts = [31,41,51,61,71,81,91,1000]
-age_keys = ["<=30", "31-40", "41-50", "51-60", "61-70", "71-80", "81-90", ">=91"]
+age_cuts = [11,21,31,41,51,61,71,81,91,1000]
+age_keys = ["<=10", "11-20", "21-30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
 zone_keys = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"]
 csv_columns = ["numero_de_caso","fecha_apertura_snvs","fecha_toma_muestra","fecha_clasificacion","provincia","barrio",
 				"comuna","genero","edad","clasificacion","fecha_fallecimiento","fallecido","fecha_alta","tipo_contagio"]
 zone_c_s = ["1M","1F","1","2M","2F","2","3M","3F","3","4M","4F","4","5M","5F","5","6M","6F","6","7M","7F","7",
 			"8M","8F","8","9M","9F","9","10M","10F","10","11M","11F","11","12M","12F","12","13M","13F","13",
 			"14M","14F","14","15M","15F","15","TotalM","TotalF","Total"]
-age_c_s = ["<=30M","<=30F","<=30","31-40M","31-40F","31-40","41-50M","41-50F","41-50","51-60M","51-60F","51-60",
-		"61-70M","61-70F","61-70","71-80M","71-80F","71-80","81-90M","81-90F","81-90",">=91M",">=91F",">=91",
-		"TotalM","TotalF","Total", "DelayCount", "CumDelay", "DelayAvg"]
+age_c_s = ["<=10M","<=10F","<=10","11-20M","11-20F","11-20","21-30M","21-30F","21-30","31-40M","31-40F","31-40",
+		"41-50M","41-50F","41-50","51-60M","51-60F","51-60","61-70M","61-70F","61-70","71-80M","71-80F","71-80",
+		"81-90M","81-90F","81-90",">=91M",">=91F",">=91","TotalM","TotalF","Total", "DelayCount", "CumDelay", "DelayAvg"]
 for d in range(len(data_type)):
 	data_zone.append(pd.DataFrame(0, index=period, columns=zone_c_s))
 	data_age.append(pd.DataFrame(0, index=period, columns=age_c_s))

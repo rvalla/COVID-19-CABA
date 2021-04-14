@@ -5,6 +5,9 @@ import pandas as pd
 #Saving the moment in which this process start
 start_time = tm.time()
 
+#Output path:
+output_path = "processed/"
+
 #Importing data from llamados_107_covid.csv
 calls_data = pd.read_csv("datasets/llamados_107_covid.csv")
 calls_data["FECHA"] = pd.to_datetime(calls_data["FECHA"], format="%d%b%Y:%H:%M:%S")
@@ -29,7 +32,7 @@ def add_ratios():
 
 #Saving a new csv file
 def save():
-	calls_data.to_csv("processed/emergencycalls.csv")
+	calls_data.to_csv(output_path + "emergencycalls.csv")
 	print("-- Processed csv file saved!                 ", end="\n")
 	print("-- This took " + str(get_time(start_time, tm.time())))
 
