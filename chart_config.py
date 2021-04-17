@@ -8,7 +8,7 @@ w = 8
 h = 4.5
 d_w = 8
 d_h = 6.5
-chart_path = "charts/"
+chart_path = "testing/"
 default_font = "Oswald" #Change this if you don't like it or is not available in your system
 legend_font = "Myriad Pro" #Change this to edit legends' font
 background_plot = "silver" #Default background color for charts
@@ -17,13 +17,15 @@ major_grid_color = "dimgrey" #Default colors for grids...
 minor_grid_color = "dimgray"
 colors = ["tab:red", "tab:blue", "tab:green", "limegreen", "orange", "indianred", "teal", "darkslategray", \
 			"mediumseagreen", "orangered", "goldenrod", "dimgrey", "whitesmoke"]
+a_colors = ["forestgreen", "darkgreen", "lightseagreen", "teal", "tab:blue", "darkblue", "indigo", \
+			"mediumpurple", "firebrick", "darkred"]
 alphaMGC = 0.7
 alphamGC = 0.9
 image_resolution = 120
 language = 1 #0 = english, 1 = spanish
 legend_text_size = 8
 plot_scale = "linear"
-start_date = "2020-10-01"
+start_date = "2020-07-01"
 week_interval = 3
 v_start_date = "2021-01-01"
 v_week_interval = 2
@@ -114,7 +116,7 @@ def build_axis_texts(axis, title, x_axis, y_axis):
 	axis.set_ylabel(y_axis, fontname=legend_font)
 
 def build_legend():
-	plt.legend(loc=0, shadow = True, facecolor = background_figure,
+	plt.legend(loc=2, shadow = True, facecolor = background_figure,
 			prop={'family' : legend_font, 'size' : legend_text_size})
 
 def build_legends(axis_a, axis_b):
