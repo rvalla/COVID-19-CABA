@@ -4,7 +4,7 @@ import util as ut
 import pandas as pd
 
 #Saving the moment in which this process start
-start_time = tm.time()
+start_time = None
 
 #Output path:
 output_path = "processed/"
@@ -62,6 +62,8 @@ def build_estimation(c_df, d_df, out_df):
 	out_df["knownratio"] = out_df["confirmed"] / out_df["estimation"]
 
 def run():
+	global start_time
+	start_time = tm.time()
 	print("-- Analysing cases data...", end="\n")
 	build_death_rate(d_byage_cum[0], d_byage_cum[1], deathrate)
 	build_age_ratios(d_byage_avg[0], c_age_ratios)

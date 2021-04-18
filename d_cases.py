@@ -1,10 +1,11 @@
 import math
 import time as tm
+import datetime as dt
 import util as ut
 import pandas as pd
 
 #Saving the moment in which this process start
-start_time = tm.time()
+start_time = None
 
 #Output path:
 output_path = "processed/"
@@ -19,9 +20,9 @@ delay_errors = 0
 
 #Setting time period
 start_date = "2020-03-15"
-end_date = "2021-04-13"
+end_date = "2021-04-16"
 period = pd.date_range(start_date, end_date)
-csv_lines = 2092820
+csv_lines = 2123193
 lines_step = 5000
 age_cuts = [11,21,31,41,51,61,71,81,91,1000]
 age_keys = ["<=10", "11-20", "21-30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
@@ -108,6 +109,8 @@ def get_age_key(in_key):
 	return age_keys[p]
 
 def run():
+	global start_time
+	start_time = tm.time()
 	print("-- Processing cases dataset...", end="\n")
 	print("-- Which is huge. Be patient...", end="\n")
 	#Variables to control sub_datasets
@@ -129,9 +132,7 @@ def run():
 		done_lines += lines
 		step += 1
 	print("-- A total of " + str(done_lines) + " lines where processed.", end="\n")
-	print("-- !!! Errors while processing by age: " + str(age_errors) + " (" + str(round((age_errors/csv_lines)*100,2)) + "%)")
-	print("-- !!! Errors while processing by zone: " + str(zone_errors) + " (" + str(round((zone_errors/csv_lines)*100,2)) + "%)")
-	print("-- !!! Errors while processing delays: " + str(delay_errors) + " (" + str(round((delay_errors/csv_lines)*100,2)) + "%)")
+	write_log()
 	complete_data_sums()
 	save_processed_data()
 
@@ -189,6 +190,20 @@ def save_cum_sum(in_df, f_name):
 def save_averages(in_df, f_name):
 	avg = ut.build_averages(in_df, 7)
 	avg.to_csv(output_path + f_name)
+
+def write_log():
+	log = open(output_path + "log.md", "a")
+	m = "-- !!! Errors while processing by age: " + str(age_errors) + " (" + str(round((age_errors/csv_lines)*100,2)) + "%)" + "\n"
+	m += "-- !!! Errors while processing by zone: " + str(zone_errors) + " (" + str(round((zone_errors/csv_lines)*100,2)) + "%)" + "\n"
+	m += "-- !!! Errors while processing delays: " + str(delay_errors) + " (" + str(round((delay_errors/csv_lines)*100,2)) + "%)"
+	today = dt.date.today()
+	log.write("\n")
+	log.write("### %s"%today)
+	log.write(":" + "\n")
+	log.write(m)
+	log.write("\n")
+	log.close()
+	print(m)
 
 #Calculating time needed to processed the data..
 def get_time(start_time, end_time):

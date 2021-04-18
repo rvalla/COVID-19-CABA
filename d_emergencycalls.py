@@ -3,7 +3,7 @@ import util as ut
 import pandas as pd
 
 #Saving the moment in which this process start
-start_time = tm.time()
+start_time = None
 
 #Output path:
 output_path = "processed/"
@@ -37,6 +37,8 @@ def save():
 	print("-- This took " + str(get_time(start_time, tm.time())))
 
 def run():
+	global start_time
+	start_time = tm.time()
 	print("-- Processing emergency calls data...", end="\n")
 	add_averages()
 	add_ratios()

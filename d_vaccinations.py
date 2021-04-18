@@ -4,7 +4,7 @@ import util as ut
 import pandas as pd
 
 #Saving the moment in which this process start
-start_time = tm.time()
+start_time = None
 
 #Output path:
 output_path = "processed/"
@@ -15,9 +15,9 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-04-13"
+end_date = "2021-04-16"
 period = pd.date_range(start_date, end_date)
-csv_lines = 4371
+csv_lines = 4599
 lines_step = 2000
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
 
@@ -80,6 +80,8 @@ def get_vac_key(vac_field):
 	return vac_in[vac_field]
 
 def run():
+	global start_time
+	start_time = tm.time()
 	print("-- Processing vaccination campaign data...", end="\n")
 	#Variables to control sub_datasets
 	step = 0
@@ -159,7 +161,6 @@ def build_reached_population_by_sex(cum_data):
 		cum_data[c + "M"] = cum_data[c + "M"] / demographics.loc[c, "Men"]
 		cum_data[c + "F"] = cum_data[c + "F"] / demographics.loc[c, "Women"]
 		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
-	#cum_data.set_index("FECHA", inplace=True)
 	cum_data.to_csv(output_path + "reached_vaccinationbyageandsex.csv")
 
 def build_reached_population_by_dose(cum_data):
@@ -177,7 +178,6 @@ def build_reached_population_by_dose(cum_data):
 		cum_data[c + "A"] = cum_data[c + "A"] / demographics.loc[c, "Both"]
 		cum_data[c + "B"] = cum_data[c + "B"] / demographics.loc[c, "Both"]
 		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
-	#cum_data.set_index("FECHA", inplace=True)
 	cum_data.to_csv(output_path + "reached_vaccinationbyageanddose.csv")
 
 #Calculating time needed to processed the data..
