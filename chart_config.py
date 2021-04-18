@@ -8,7 +8,7 @@ w = 8
 h = 4.5
 d_w = 8
 d_h = 6.5
-chart_path = "testing/"
+chart_path = "charts/"
 default_font = "Oswald" #Change this if you don't like it or is not available in your system
 legend_font = "Myriad Pro" #Change this to edit legends' font
 background_plot = "silver" #Default background color for charts
@@ -31,7 +31,7 @@ v_start_date = "2021-01-01"
 v_week_interval = 2
 e_start_date = "2020-03-15"
 e_week_interval = 6
-end_date = "2021-04-13"
+end_date = "2021-04-16"
 
 if language == 1:
 	date_format = mdates.DateFormatter("%d/%m")
