@@ -25,13 +25,13 @@ image_resolution = 120
 language = 1 #0 = english, 1 = spanish
 legend_text_size = 8
 plot_scale = "linear"
-start_date = "2020-07-01"
+start_date = "2020-11-01"
 week_interval = 3
 v_start_date = "2021-01-01"
 v_week_interval = 2
 e_start_date = "2020-03-15"
 e_week_interval = 6
-end_date = "2021-04-16"
+end_date = "2021-04-18"
 
 if language == 1:
 	date_format = mdates.DateFormatter("%d/%m")
@@ -122,5 +122,5 @@ def build_legend():
 def build_legends(axis_a, axis_b):
 	a, al = axis_a.get_legend_handles_labels()
 	b, bl = axis_b.get_legend_handles_labels()
-	axis_b.legend(a + b, al + bl, loc=0, shadow = True, facecolor = background_figure,
+	axis_b.legend(a + b, al + bl, loc=2, shadow = True, facecolor = background_figure,
 				prop={'family' : legend_font, 'size' : legend_text_size})

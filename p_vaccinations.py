@@ -3,10 +3,10 @@ import pandas as pd
 from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
 
-cum_age_sex = pd.read_csv("processed/cum_vaccinationbyageandsex.csv")
+cum_age_sex = pd.read_csv("processed/vaccinationbyageandsex_cum.csv")
 cum_age_sex["FECHA"] = pd.to_datetime(cum_age_sex["FECHA"], format="%Y-%m-%d")
 cum_age_sex.set_index("FECHA", inplace=True)
-cum_age_dose = pd.read_csv("processed/cum_vaccinationbyageanddose.csv")
+cum_age_dose = pd.read_csv("processed/vaccinationbyageanddose_cum.csv")
 cum_age_dose["FECHA"] = pd.to_datetime(cum_age_dose["FECHA"], format="%Y-%m-%d")
 cum_age_dose.set_index("FECHA", inplace=True)
 age_dose = pd.read_csv("processed/vaccinationbyageanddose.csv")
@@ -18,10 +18,10 @@ age_dose_avg.set_index("FECHA", inplace=True)
 vac_dose_avg = pd.read_csv("processed/vaccinationbyvaccineavg.csv")
 vac_dose_avg["FECHA"] = pd.to_datetime(vac_dose_avg["FECHA"], format="%Y-%m-%d")
 vac_dose_avg.set_index("FECHA", inplace=True)
-reached_s = pd.read_csv("processed/reached_vaccinationbyageandsex.csv")
+reached_s = pd.read_csv("processed/vaccinationbyageandsex_reached.csv")
 reached_s["FECHA"] = pd.to_datetime(reached_s["FECHA"], format="%Y-%m-%d")
 reached_s.set_index("FECHA", inplace=True)
-reached_d = pd.read_csv("processed/reached_vaccinationbyageanddose.csv")
+reached_d = pd.read_csv("processed/vaccinationbyageanddose_reached.csv")
 reached_d["FECHA"] = pd.to_datetime(reached_d["FECHA"], format="%Y-%m-%d")
 reached_d.set_index("FECHA", inplace=True)
 
