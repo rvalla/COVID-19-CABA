@@ -15,9 +15,9 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-04-16"
+end_date = "2021-04-18"
 period = pd.date_range(start_date, end_date)
-csv_lines = 4599
+csv_lines = 4654
 lines_step = 2000
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
 
@@ -131,11 +131,11 @@ def save_processed_data():
 	d_age_sex.to_csv(output_path + "vaccinationbyageandsex.csv")
 	d_vac.to_csv(output_path + "vaccinationbyvaccine.csv")
 	cum_age_dose = d_age_dose.cumsum()
-	cum_age_dose.to_csv(output_path + "cum_vaccinationbyageanddose.csv")
+	cum_age_dose.to_csv(output_path + "vaccinationbyageanddose_cum.csv")
 	cum_age_sex = d_age_sex.cumsum()
-	cum_age_sex.to_csv(output_path + "cum_vaccinationbyageandsex.csv")
+	cum_age_sex.to_csv(output_path + "vaccinationbyageandsex_cum.csv")
 	cum_vac = d_vac.cumsum()
-	cum_vac.to_csv(output_path + "cum_vaccinationbyvaccine.csv")
+	cum_vac.to_csv(output_path + "vaccinationbyvaccine_cum.csv")
 	d_age_dose_avg = ut.build_averages(d_age_dose, 7)
 	d_age_dose_avg.to_csv(output_path + "vaccinationbyageanddoseavg.csv")
 	d_vac_avg = ut.build_averages(d_vac, 7)
@@ -161,7 +161,7 @@ def build_reached_population_by_sex(cum_data):
 		cum_data[c + "M"] = cum_data[c + "M"] / demographics.loc[c, "Men"]
 		cum_data[c + "F"] = cum_data[c + "F"] / demographics.loc[c, "Women"]
 		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
-	cum_data.to_csv(output_path + "reached_vaccinationbyageandsex.csv")
+	cum_data.to_csv(output_path + "vaccinationbyageandsex_reached.csv")
 
 def build_reached_population_by_dose(cum_data):
 	cum_data[">=81A"] = cum_data["81-90A"] + cum_data[">=91A"]
@@ -178,7 +178,7 @@ def build_reached_population_by_dose(cum_data):
 		cum_data[c + "A"] = cum_data[c + "A"] / demographics.loc[c, "Both"]
 		cum_data[c + "B"] = cum_data[c + "B"] / demographics.loc[c, "Both"]
 		cum_data[c] = cum_data[c] / demographics.loc[c, "Both"]
-	cum_data.to_csv(output_path + "reached_vaccinationbyageanddose.csv")
+	cum_data.to_csv(output_path + "vaccinationbyageanddose_reached.csv")
 
 #Calculating time needed to processed the data..
 def get_time(start_time, end_time):

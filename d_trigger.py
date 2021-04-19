@@ -9,14 +9,14 @@ print("---------------------------------------------", end="\n")
 print("https://gitlab.com/rodrigovalla/covid-19-caba", end="\n")
 print("---------------------------------------------", end="\n")
 
+#Building data from cases dataset
+cases.run()
+
 #Building data from emergency calls
 ecalls.run()
 
 #Building data from vaccination champaing dataset
 vac.run()
-
-#Building data from cases dataset
-cases.run()
 
 #Building some estimations and ratios
 analysis.run()

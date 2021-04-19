@@ -10,8 +10,8 @@ start_time = None
 output_path = "processed/"
 
 #Some estimation variables
-real_mortality = 0.005 #Real mortality to estimate infected count from deaths
-death_offset = 14 #Number of days needed to reach a death since symptoms onset on average
+real_mortality = 0.01 #Real mortality to estimate infected count from deaths
+death_offset = 12 #Number of days needed to reach a death since symptoms onset on average
 
 data_types = ["Confirmed", "Deaths", "Dropped"]
 input_path = "processed/"
