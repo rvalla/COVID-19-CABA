@@ -50,7 +50,7 @@ def plot_total_vac_by_dose(y_min, ticks_interval, ticks_divisor):
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
-	cc.grid_and_ticks(y_min, s[1] * 1.1, ticks_interval, ticks_divisor, 0)
+	cc.grid_and_ticks(y_min, s[1], ticks_interval, ticks_divisor, 0)
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("totalvaccinationsbydose", f, "V")
 
@@ -63,7 +63,7 @@ def plot_doses_by_age(y_min, ticks_interval, ticks_divisor):
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
-	cc.grid_and_ticks(y_min, s[1] * 1.1, ticks_interval, ticks_divisor, 0)
+	cc.grid_and_ticks(y_min, s[1], ticks_interval, ticks_divisor, 0)
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("vaccinationsbyage", f, "V")
 
@@ -76,7 +76,7 @@ def plot_doses_by_age_avg(y_min, ticks_interval, ticks_divisor):
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
-	cc.grid_and_ticks(y_min, s[1] * 1.1, ticks_interval, ticks_divisor, 0)
+	cc.grid_and_ticks(y_min, s[1], ticks_interval, ticks_divisor, 0)
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("vaccinationsbyageavg", f, "V")
 
@@ -89,7 +89,7 @@ def plot_doses_by_vac_avg(y_min, ticks_interval, ticks_divisor):
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
-	cc.grid_and_ticks(y_min, s[1] * 1.1, ticks_interval, ticks_divisor, 0)
+	cc.grid_and_ticks(y_min, s[1], ticks_interval, ticks_divisor, 0)
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("vaccinationsbyvac", f, "V")
 
@@ -102,7 +102,7 @@ def plot_reached_population_by_age(y_min, ticks_interval, ticks_divisor):
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
-	cc.grid_and_ticks(y_min, s[1] * 1.1, ticks_interval, ticks_divisor, 2)
+	cc.grid_and_ticks(y_min, s[1], ticks_interval, ticks_divisor, 2)
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("reachedbyage", f, "V")
 
@@ -116,7 +116,7 @@ def plot_reached_population_by_sex(ticks_interval, ticks_divisor):
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
-	min, max = cc.get_simetrical_limits(s[0] * 1.1, s[1] * 1.1)
+	min, max = cc.get_simetrical_limits(s[0] * 1.1, s[1])
 	cc.grid_and_ticks(min, max, ticks_interval, ticks_divisor, 2)
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("reachedbysex", f, "V")

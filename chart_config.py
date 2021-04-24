@@ -31,7 +31,7 @@ v_start_date = "2021-01-01"
 v_week_interval = 2
 e_start_date = "2020-03-15"
 e_week_interval = 6
-end_date = "2021-04-18"
+end_date = "2021-04-23"
 
 if language == 1:
 	date_format = mdates.DateFormatter("%d/%m")

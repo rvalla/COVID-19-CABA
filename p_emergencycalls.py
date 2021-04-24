@@ -52,7 +52,7 @@ def plot_calls_ratios(y_min, ticks_interval, ticks_divisor):
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
-	cc.grid_and_ticks(y_min, s[1] * 1.1, ticks_interval, ticks_divisor, 2)
+	cc.grid_and_ticks(y_min, s[1], ticks_interval, ticks_divisor, 2)
 	cc.ticks_locator(cc.week_interval)
 	cc.save_plot("callsratios", f, "C")
 
@@ -66,7 +66,7 @@ def plot_calls_ratios_avg(y_min, ticks_interval, ticks_divisor):
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
-	cc.grid_and_ticks(y_min, s[1] * 1.1, ticks_interval, ticks_divisor, 2)
+	cc.grid_and_ticks(y_min, s[1], ticks_interval, ticks_divisor, 2)
 	cc.ticks_locator(cc.week_interval)
 	cc.save_plot("callsratiosavg", f, "C")
 
