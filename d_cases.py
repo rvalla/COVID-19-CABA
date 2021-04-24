@@ -20,9 +20,9 @@ delay_errors = 0
 
 #Setting time period
 start_date = "2020-03-15"
-end_date = "2021-04-18"
+end_date = "2021-04-23"
 period = pd.date_range(start_date, end_date)
-csv_lines = 2158582
+csv_lines = 2215871
 lines_step = 5000
 age_cuts = [11,21,31,41,51,61,71,81,91,1000]
 age_keys = ["<=10", "11-20", "21-30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
