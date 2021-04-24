@@ -27,6 +27,7 @@ cases.plot_total_cases(0, 0, 50000, 1000, 1500, 1000)
 cases.plot_total_avg(0, 0, 500, 1, 15, 1)
 cases.plot_delay_evol(0, 0, 1, 1, 5, 1)
 cases.plot_cases_by_age_avg(0, 0, 250, 1, 5, 1)
+cases.plot_cases_by_zone_avg(0, 0, 75, 1, 1, 1)
 
 #Building analysis charts
 sis.plot_estimation_avg(0, 0, 2000, 1000, 0.25, 1)

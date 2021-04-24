@@ -16,7 +16,7 @@ background_figure = "white" #Default background color for figures
 major_grid_color = "dimgrey" #Default colors for grids...
 minor_grid_color = "dimgray"
 colors = ["tab:red", "tab:blue", "tab:green", "limegreen", "orange", "indianred", "teal", "darkslategray", \
-			"mediumseagreen", "orangered", "goldenrod", "dimgrey", "whitesmoke"]
+			"mediumseagreen", "orangered", "goldenrod", "dimgrey", "whitesmoke", "mediumpurple", "indigo"]
 a_colors = ["forestgreen", "darkgreen", "lightseagreen", "teal", "tab:blue", "darkblue", "indigo", \
 			"mediumpurple", "firebrick", "darkred"]
 alphaMGC = 0.7
