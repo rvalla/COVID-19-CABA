@@ -14,19 +14,26 @@ filename = "casos_covid19.csv"
 data_type = ["confirmed", "deaths", "dropped"]
 data_zone = []
 data_age = []
+data_origin = []
 age_errors = 0
 zone_errors = 0
 delay_errors = 0
+origin_errors = 0
+d_age_errors = 0
+d_zone_errors = 0
+d_delay_errors = 0
+d_origin_errors = 0
 
 #Setting time period
 start_date = "2020-03-15"
-end_date = "2021-04-23"
+end_date = "2021-04-30"
 period = pd.date_range(start_date, end_date)
-csv_lines = 2215871
-lines_step = 5000
+csv_lines = 2283283
+lines_step = 10000
 age_cuts = [11,21,31,41,51,61,71,81,91,1000]
 age_keys = ["<=10", "11-20", "21-30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
 zone_keys = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"]
+origin_keys = ["S", "C", "CE", "E", "I"]
 csv_columns = ["numero_de_caso","fecha_apertura_snvs","fecha_toma_muestra","fecha_clasificacion","provincia","barrio",
 				"comuna","genero","edad","clasificacion","fecha_fallecimiento","fallecido","fecha_alta","tipo_contagio"]
 zone_c_s = ["1M","1F","1","2M","2F","2","3M","3F","3","4M","4F","4","5M","5F","5","6M","6F","6","7M","7F","7",
@@ -35,11 +42,15 @@ zone_c_s = ["1M","1F","1","2M","2F","2","3M","3F","3","4M","4F","4","5M","5F","5
 age_c_s = ["<=10M","<=10F","<=10","11-20M","11-20F","11-20","21-30M","21-30F","21-30","31-40M","31-40F","31-40",
 		"41-50M","41-50F","41-50","51-60M","51-60F","51-60","61-70M","61-70F","61-70","71-80M","71-80F","71-80",
 		"81-90M","81-90F","81-90",">=91M",">=91F",">=91","TotalM","TotalF","Total", "DelayCount", "CumDelay", "DelayAvg"]
+origin_c = ["SM", "SF", "S", "CM", "CF", "C", "CEM", "CEF", "CE", "EM", "EF", "E", "IM", "IF", "I", "TotalM","TotalF","Total"]
 for d in range(len(data_type)):
 	data_zone.append(pd.DataFrame(0, index=period, columns=zone_c_s))
 	data_age.append(pd.DataFrame(0, index=period, columns=age_c_s))
 	data_zone[d].index.name = "FECHA"
 	data_age[d].index.name = "FECHA"
+	if d < 2:
+		data_origin.append(pd.DataFrame(0, index=period, columns=origin_c))
+		data_origin[d].index.name = "FECHA"
 
 #Functions to process the dataset...
 def add_confirmed_case(in_data, date_s, date_c):
@@ -54,19 +65,29 @@ def add_confirmed_case(in_data, date_s, date_c):
 	except:
 		global zone_errors
 		zone_errors += 1
+	try:
+		add_case_by_origin(in_data, data_origin[0], date_s)
+	except:
+		global origin_errors
+		origin_errors += 1
 
 def add_death_case(in_data, date_s, date_c):
 	delay = pd.Timedelta(date_c - date_s).days
 	try:
 		add_case_by_age(in_data, data_age[1], date_s, delay)
 	except:
-		global age_errors
-		age_errors += 1
+		global d_age_errors
+		d_age_errors += 1
 	try:
 		add_case_by_zone(in_data, data_zone[1], date_s)
 	except:
-		global zone_errors
-		zone_errors += 1
+		global d_zone_errors
+		d_zone_errors += 1
+	try:
+		add_case_by_origin(in_data, data_origin[1], date_s)
+	except:
+		global d_origin_errors
+		d_origin_errors += 1
 
 def add_dropped_case(in_data, date_s, date_c):
 	delay = pd.Timedelta(date_c - date_s).days
@@ -101,12 +122,24 @@ def add_case_by_zone(in_data, out_df, date_s):
 	elif in_data["genero"] == "masculino":
 		out_df.loc[date_s][key + "M"] += 1
 
+def add_case_by_origin(in_data, out_df, date_s):
+	key = get_origin_key(in_data["tipo_contagio"])
+	if in_data["genero"] == "femenino":
+		out_df.loc[date_s][key + "F"] += 1
+	elif in_data["genero"] == "masculino":
+		out_df.loc[date_s][key + "M"] += 1
+
 #Deciding age group...
 def get_age_key(in_key):
 	p = 0
 	while in_key > age_cuts[p]:
 		p += 1
 	return age_keys[p]
+
+#Deciding origin key...
+origins = {"Trabajador de la Salud": "S", "Comunitario": "C", "Contacto": "CE", "En Investigación": "E", "Importado": "I"}
+def get_origin_key(in_key):
+	return origins[in_key]
 
 def run():
 	global start_time
@@ -156,6 +189,8 @@ def complete_data_sums():
 	for t in range(len(data_type)):
 		data_sums(data_age[t], age_keys, ["M","F"])
 		data_sums(data_zone[t], zone_keys, ["M","F"])
+		if t < 2:
+			data_sums(data_origin[t], origin_keys, ["M","F"])
 
 def data_sums(in_df, in_c, in_l):
 	for c in in_c:
@@ -173,6 +208,9 @@ def save_processed_data():
 		get_delay_avg(data_age[t])
 		data_zone[t].to_csv(output_path + "" + name + "_byzone.csv")
 		data_age[t].to_csv(output_path + "" + name + "_byage.csv")
+		if t < 2:
+			data_origin[t].to_csv(output_path + "" + name + "_byorigin.csv")
+			save_averages(data_origin[t], name + "_byorigin_avg.csv")
 		save_cum_sum(data_zone[t], name + "_byzone_cum.csv")
 		save_averages(data_zone[t], name + "_byzone_avg.csv")
 		save_averages(data_age[t], name + "_byage_avg.csv")
@@ -195,6 +233,7 @@ def write_log():
 	log = open(output_path + "log.md", "a")
 	m = "-- !!! Errors while processing by age: " + str(age_errors) + " (" + str(round((age_errors/csv_lines)*100,2)) + "%)" + "\n"
 	m += "-- !!! Errors while processing by zone: " + str(zone_errors) + " (" + str(round((zone_errors/csv_lines)*100,2)) + "%)" + "\n"
+	m += "-- !!! Errors while processing by origin: " + str(origin_errors) + " (" + str(round((origin_errors/csv_lines)*100,2)) + "%)" + "\n"
 	m += "-- !!! Errors while processing delays: " + str(delay_errors) + " (" + str(round((delay_errors/csv_lines)*100,2)) + "%)"
 	today = dt.date.today()
 	log.write("\n")
