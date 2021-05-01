@@ -10,6 +10,8 @@ estimation_avg = pd.read_csv(input_path + "analysis_estimation_avg.csv")
 estimation_cum = pd.read_csv(input_path + "analysis_estimation_cum.csv")
 c_age_ratios = pd.read_csv(input_path + "analysis_ratiosbyage_confirmed.csv")
 d_age_ratios = pd.read_csv(input_path + "analysis_ratiosbyage_deaths.csv")
+c_origin_ratios = pd.read_csv(input_path + "analysis_ratiosbyorigin_confirmed.csv")
+d_origin_ratios = pd.read_csv(input_path + "analysis_ratiosbyorigin_deaths.csv")
 deathrate["FECHA"] = pd.to_datetime(deathrate["FECHA"], format="%Y-%m-%d")
 deathrate.set_index("FECHA", inplace=True)
 estimation_avg["FECHA"] = pd.to_datetime(estimation_avg["FECHA"], format="%Y-%m-%d")
@@ -20,6 +22,10 @@ c_age_ratios["FECHA"] = pd.to_datetime(c_age_ratios["FECHA"], format="%Y-%m-%d")
 c_age_ratios.set_index("FECHA", inplace=True)
 d_age_ratios["FECHA"] = pd.to_datetime(d_age_ratios["FECHA"], format="%Y-%m-%d")
 d_age_ratios.set_index("FECHA", inplace=True)
+c_origin_ratios["FECHA"] = pd.to_datetime(c_origin_ratios["FECHA"], format="%Y-%m-%d")
+c_origin_ratios.set_index("FECHA", inplace=True)
+d_origin_ratios["FECHA"] = pd.to_datetime(d_origin_ratios["FECHA"], format="%Y-%m-%d")
+d_origin_ratios.set_index("FECHA", inplace=True)
 
 def plot_deathrate_by_sex_and_age(y_min_a, y_min_b, ticks_interval_A, ticks_interval_B):
 	print("-- Plotting deathrate evolution...", end="\n")
@@ -160,6 +166,31 @@ def plot_sex_ratios(y_min_a, y_min_b, y_max_a, y_max_b, ticks_interval_A, ticks_
 	cc.ticks_locator(cc.week_interval)
 	cc.save_plot("confirmedanddeaths_sexratios", f, "A")
 
+def plot_origin_ratios(y_min_a, y_min_b, y_max_a, y_max_b, ticks_interval_A, ticks_interval_B):
+	print("-- Plotting origin ratios...", end="\n")
+	f = figure(num=None, figsize=(cc.d_w, cc.d_h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
+	confirmed = plt.subplot2grid((2, 1), (0, 0))
+	chart_texts = get_chart_texts("c_origin")
+	new_end_date = pd.to_datetime(cc.end_date, format="%Y-%m-%d") - pd.Timedelta(days=7)
+	for i in range(len(origin_groups)):
+		confirmed = c_origin_ratios[origin_groups[i]][cc.start_date:new_end_date].plot(kind='line', color=cc.a_colors[i], label=chart_texts[3+i], linewidth=2.5)
+	cc.build_axis_texts(confirmed, chart_texts[0], "", chart_texts[2])
+	xaxis = plt.xlim()
+	s = plt.ylim()
+	cc.grid_and_ticks(y_min_a, y_max_a, ticks_interval_A, 1, 2)
+	cc.ticks_locator(cc.week_interval)
+	plt.gca().xaxis.set_ticklabels([])
+	deaths = plt.subplot2grid((2, 1), (1, 0))
+	chart_texts = get_chart_texts("d_origin")
+	for i in range(len(origin_groups)):
+		confirmed = d_origin_ratios[origin_groups[i]][cc.start_date:new_end_date].plot(kind='line', color=cc.a_colors[i], label=chart_texts[3+i], linewidth=2.5)
+	cc.build_axis_texts(deaths, chart_texts[0], chart_texts[1], chart_texts[2])
+	cc.build_legend()
+	plt.xlim(xaxis[0], xaxis[1])
+	s = plt.ylim()
+	cc.grid_and_ticks(y_min_b, y_max_b, ticks_interval_B, 1, 2)
+	cc.ticks_locator(cc.week_interval)
+	cc.save_plot("confirmedanddeaths_originratios", f, "A")
 
 texts_dict_en = {"deathratebysex": ["COVID-19 CABA: Death rate evolution", "Time in days", "Death rate",
 				"Male", "Female", "Total"],
@@ -173,7 +204,11 @@ texts_dict_en = {"deathratebysex": ["COVID-19 CABA: Death rate evolution", "Time
 				"c_sexratios": ["COVID-19 CABA: Confirmed cases proportions by sex", "Time in days", "% confirmed cases",
 				"Male", "Female"],
 				"d_sexratios": ["COVID-19 CABA: Deaths proportions by sex", "Time in days", "% deaths",
-				"Male", "Female"]}
+				"Male", "Female"],
+				"c_origin": ["COVID-19 CABA: Proportions by infection type (confirmed)", "Time in days", "% confirmed cases",
+				"Health employes", "Closed contact", "Under study", "Imported"],
+				"d_origin": ["COVID-19 CABA: Proportions by infection type (deaths)", "Time in days", "% deaths",
+				"Health employes", "Closed contact", "Under study", "Imported"]}
 
 texts_dict_es = {"deathratebysex": ["COVID-19 CABA: Tasa de letalidad", "Tiempo en días", "Tasa de letalidad",
 				"Hombres", "Mujeres", "Total"],
@@ -186,10 +221,15 @@ texts_dict_es = {"deathratebysex": ["COVID-19 CABA: Tasa de letalidad", "Tiempo 
 				"d_ageratios": ["COVID-19 CABA: Proporciones de fallecidos por edad", "Tiempo en días", "% fallecidos"],
 				"c_sexratios": ["COVID-19 CABA: Proporciones de casos por sexo", "Tiempo en días", "% casos confirmados",
 				"Hombres", "Mujeres"],
-				"d_sexratios": ["COVID-19 CABA: Proporciones de fallecidos por sexo", "Tiempo en días", "% Fallecidos",
-				"Hombres", "Mujeres"]}
+				"d_sexratios": ["COVID-19 CABA: Proporciones de fallecidos por sexo", "Tiempo en días", "% fallecidos",
+				"Hombres", "Mujeres"],
+				"c_origin": ["COVID-19 CABA: Proporciones tipo de contagio (confirmados)", "Tiempo en días", "% casos",
+				"Personal de salud", "Contacto estrecho", "En estudio", "Importado"],
+				"d_origin": ["COVID-19 CABA: Proporciones tipo de contagio (fallecidos)", "Tiempo en días", "% fallecidos",
+				"Personal de salud", "Contacto estrecho", "En estudio", "Importado"]}
 
 age_groups = ["<=10","11-20", "21-30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
+origin_groups = ["S", "CE", "E", "I"]
 
 def get_chart_texts(type):
 	texts = []
