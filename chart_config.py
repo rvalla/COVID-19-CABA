@@ -26,12 +26,12 @@ language = 1 #0 = english, 1 = spanish
 legend_text_size = 8
 plot_scale = "linear"
 start_date = "2020-11-01"
+end_date = "2021-05-14"
 week_interval = 3
 v_start_date = "2021-01-01"
 v_week_interval = 2
 e_start_date = "2020-03-15"
 e_week_interval = 6
-end_date = "2021-04-23"
 
 if language == 1:
 	date_format = mdates.DateFormatter("%d/%m")
@@ -43,6 +43,7 @@ def save_plot(name, figure, code):
 		plt.yscale(plot_scale)
 	plt.tight_layout(rect=[0, 0, 1, 1])
 	plt.savefig(chart_path + code + "_" + str(language) + "_" + name + ".png", facecolor=figure.get_facecolor())
+	plt.close(figure)
 	print("-- The chart was saved!", end="\n")
 
 def grid_and_ticks(y_min, y_max, ticks_interval, ticks_divisor, dp):
