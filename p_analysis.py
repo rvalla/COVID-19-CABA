@@ -56,10 +56,11 @@ def plot_deathrate_by_sex_and_age(y_min_a, y_min_b, ticks_interval_A, ticks_inte
 
 def plot_deathrate_by_age(y_min, ticks_interval):
 	print("-- Plotting deathrate evolution...", end="\n")
+	new_end_date = pd.to_datetime(cc.end_date, format="%Y-%m-%d") - pd.Timedelta(days=14)
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
 	chart_texts = get_chart_texts("deathratebyage")
 	for a in range(len(age_groups)):
-		byagerate = deathrate[age_groups[a]][cc.start_date:cc.end_date].plot(kind='line', label=age_groups[a], color=cc.a_colors[a], linewidth=2.5)
+		byagerate = deathrate[age_groups[a]][cc.start_date:new_end_date].plot(kind='line', label=age_groups[a], color=cc.a_colors[a], linewidth=2.5)
 	cc.build_axis_texts(byagerate, chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
@@ -171,7 +172,7 @@ def plot_origin_ratios(y_min_a, y_min_b, y_max_a, y_max_b, ticks_interval_A, tic
 	f = figure(num=None, figsize=(cc.d_w, cc.d_h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
 	confirmed = plt.subplot2grid((2, 1), (0, 0))
 	chart_texts = get_chart_texts("c_origin")
-	new_end_date = pd.to_datetime(cc.end_date, format="%Y-%m-%d") - pd.Timedelta(days=7)
+	new_end_date = pd.to_datetime(cc.end_date, format="%Y-%m-%d") - pd.Timedelta(days=14)
 	for i in range(len(origin_groups)):
 		confirmed = c_origin_ratios[origin_groups[i]][cc.start_date:new_end_date].plot(kind='line', color=cc.a_colors[i], label=chart_texts[3+i], linewidth=2.5)
 	cc.build_axis_texts(confirmed, chart_texts[0], "", chart_texts[2])
