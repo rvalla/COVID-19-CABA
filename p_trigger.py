@@ -14,9 +14,8 @@ ecalls.plot_calls_ratios_avg(0, 0.05,1)
 ecalls.plot_total_calls_avg()
 
 #Building vaccination champaign charts
-vac.plot_total_vac_by_sex(0, 100000, 1000)
-vac.plot_total_vac_by_dose(0, 100000, 1000)
-vac.plot_doses_by_age(0, 3000, 1000)
+vac.plot_total_vac_by_sex(0, 150000, 1000)
+vac.plot_total_vac_by_dose(0, 150000, 1000)
 vac.plot_doses_by_age_avg(0, 3000, 1000)
 vac.plot_doses_by_vac_avg(0, 2000, 1000)
 vac.plot_reached_population_by_age(0, 0.25, 1)
