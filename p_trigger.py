@@ -14,15 +14,15 @@ ecalls.plot_calls_ratios_avg(0, 0.05,1)
 ecalls.plot_total_calls_avg()
 
 #Building vaccination champaign charts
-vac.plot_total_vac_by_sex(0, 150000, 1000)
-vac.plot_total_vac_by_dose(0, 150000, 1000)
+vac.plot_total_vac_by_sex(0, 200000, 1000)
+vac.plot_total_vac_by_dose(0, 200000, 1000)
 vac.plot_doses_by_age_avg(0, 3000, 1000)
-vac.plot_doses_by_vac_avg(0, 2000, 1000)
+vac.plot_doses_by_vac_avg(0, 5000, 1000)
 vac.plot_reached_population_by_age(0, 0.25, 1)
 vac.plot_reached_population_by_sex(0.05, 1)
 
 #Building cases charts
-cases.plot_total_cases(0, 0, 50000, 1000, 1500, 1000)
+cases.plot_total_cases(0, 0, 100000, 1000, 1500, 1000)
 cases.plot_total_avg(0, 0, 500, 1, 15, 1)
 cases.plot_delay_evol(0, 0, 1, 1, 5, 1)
 cases.plot_cases_by_age_avg(0, 0, 250, 1, 5, 1)
