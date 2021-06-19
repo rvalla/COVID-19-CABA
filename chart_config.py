@@ -26,7 +26,7 @@ language = 1 #0 = english, 1 = spanish
 legend_text_size = 8
 plot_scale = "linear"
 start_date = "2020-11-01"
-end_date = "2021-06-11"
+end_date = "2021-06-18"
 week_interval = 3
 v_start_date = "2021-01-01"
 v_week_interval = 2
