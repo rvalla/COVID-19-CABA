@@ -76,3 +76,9 @@ Errors related to COVID-19 cases dataset:
 -- !!! Errors while processing by zone: 59544 (2.14%)
 -- !!! Errors while processing by origin: 1695 (0.06%)
 -- !!! Errors while processing delays: 2214 (0.08%)
+
+### 2021-07-14:
+-- !!! Errors while processing by age: 5180 (0.18%)
+-- !!! Errors while processing by zone: 60975 (2.14%)
+-- !!! Errors while processing by origin: 1820 (0.06%)
+-- !!! Errors while processing delays: 2285 (0.08%)
