@@ -26,9 +26,9 @@ d_origin_errors = 0
 
 #Setting time period
 start_date = "2020-03-15"
-end_date = "2021-07-13"
+end_date = "2021-07-19"
 period = pd.date_range(start_date, end_date)
-csv_lines = 2845148
+csv_lines = 2889612
 lines_step = 10000
 age_cuts = [11,21,31,41,51,61,71,81,91,1000]
 age_keys = ["<=10", "11-20", "21-30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
