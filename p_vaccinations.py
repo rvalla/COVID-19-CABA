@@ -143,7 +143,7 @@ texts_dict_es = {"total_by_sex": ["COVID-19 CABA: Vacunación según género", "
 
 age_groups = ["<=30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
 reached_age_g = ["<=30","31-40","41-50","51-60","61-70","71-80",">=81"]
-vaccines = ["Sputnik", "Sinopharm", "AstraZeneca"]
+vaccines = ["Sputnik", "Sinopharm", "AstraZeneca", "Moderna"]
 
 def get_chart_texts(type):
 	texts = []
