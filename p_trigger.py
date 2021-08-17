@@ -22,14 +22,14 @@ vac.plot_reached_population_by_age(0, 0.25, 1)
 vac.plot_reached_population_by_sex(0.1, 1)
 
 #Building cases charts
-cases.plot_total_cases(0, 0, 100000, 1000, 1500, 1000)
+cases.plot_total_cases(0, 0, 150000, 1000, 2500, 1000)
 cases.plot_total_avg(0, 0, 1000, 1000, 15, 1)
 cases.plot_delay_evol(0, 0, 1, 1, 5, 1)
 cases.plot_cases_by_age_avg(0, 0, 250, 1, 5, 1)
 cases.plot_cases_by_zone_avg(0, 0, 75, 2, 1, 1)
 
 #Building analysis charts
-sis.plot_estimation_avg(0, 0, 2000, 1000, 0.25, 1)
+sis.plot_estimation_avg(0, 0, 2000, 1000, 0.5, 1)
 sis.plot_estimation(0, 0, 500000, 1000000, 0.1, 1)
 sis.plot_deathrate_by_sex_and_age(0,0,0.05,0.25)
 sis.plot_deathrate_by_age(0, 0.05)

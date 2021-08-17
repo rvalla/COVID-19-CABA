@@ -15,9 +15,9 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-08-08"
+end_date = "2021-08-15"
 period = pd.date_range(start_date, end_date)
-csv_lines = 11735
+csv_lines = 12054
 lines_step = 3000
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
 
@@ -70,8 +70,8 @@ d_vac = pd.DataFrame(0, index=period, columns=vac_c)
 d_vac.index.name = "FECHA"
 
 def by_vaccine(in_data, out_df, date):
-	key = get_vac_key(in_data.loc["VACUNA"])
-	#key = in_data.loc["VACUNA"]
+	#key = get_vac_key(in_data.loc["VACUNA"])
+	key = in_data.loc["VACUNA"]
 	d1 = in_data["DOSIS_1"]
 	d2 = in_data["DOSIS_2"]
 	out_df.loc[date,key + "A"] += d1
