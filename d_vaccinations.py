@@ -15,9 +15,9 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-09-16"
+end_date = "2021-09-27"
 period = pd.date_range(start_date, end_date)
-csv_lines = 13999
+csv_lines = 14699
 lines_step = 3000
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
 
@@ -61,17 +61,19 @@ def get_age_key(in_key):
 #Building blank dataframe for organizing data by vaccine
 vaccines = ["Sputnik", "Moderna", "Sinopharm", "AstraZeneca"]
 vac_in = {"Sputnik": "Sputnik", "Moderna": "Moderna", "Sinopharm": "Sinopharm",
-			"vacuna Coronavirus (MODERNA) 1ra - 2da dosis, vial x 10 dosis": "Moderna",
+			"vacuna Coronavirus (CANSINO), vial x 1 dosis": "Cansino",
+			"vacuna Coronavirus (PFIZER) 1ra - 2da dosis, vial x 6 dosis (0.3ml)": "Pfizer",
 			"AstraZeneca": "AstraZeneca"}
-vac_c = ["SputnikA", "SputnikB", "Sputnik", "ModernaA", "ModernaB", "Moderna",
+vac_c = ["SputnikA", "SputnikB", "Sputnik", "ModernaA", "ModernaB", "Moderna", "PfizerA", "PfizerB", "Pfizer",
 			"SinopharmA", "SinopharmB", "Sinopharm", "AstraZenecaA", "AstraZenecaB", "AstraZeneca",
+			"CansinoA", "CansinoB", "Cansino",
 			"TotalA", "TotalB", "Total"]
 d_vac = pd.DataFrame(0, index=period, columns=vac_c)
 d_vac.index.name = "FECHA"
 
 def by_vaccine(in_data, out_df, date):
-	#key = get_vac_key(in_data.loc["VACUNA"])
-	key = in_data.loc["VACUNA"]
+	key = get_vac_key(in_data.loc["VACUNA"])
+	#key = in_data.loc["VACUNA"]
 	d1 = in_data["DOSIS_1"]
 	d2 = in_data["DOSIS_2"]
 	out_df.loc[date,key + "A"] += d1
