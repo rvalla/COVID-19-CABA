@@ -16,7 +16,7 @@ cases.run()
 ecalls.run()
 
 #Building data from vaccination champaing dataset
-#vac.run()
+vac.run()
 
 #Building some estimations and ratios
 analysis.run()

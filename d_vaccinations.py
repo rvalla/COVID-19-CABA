@@ -15,9 +15,9 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-09-27"
+end_date = "2021-10-05"
 period = pd.date_range(start_date, end_date)
-csv_lines = 14699
+csv_lines = 15264
 lines_step = 3000
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
 
