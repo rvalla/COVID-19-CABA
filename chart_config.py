@@ -8,7 +8,7 @@ w = 8
 h = 4.5
 d_w = 8
 d_h = 6.5
-chart_path = "charts/"
+chart_path = "charts/last_30/"
 default_font = "Oswald" #Change this if you don't like it or is not available in your system
 legend_font = "Myriad Pro" #Change this to edit legends' font
 background_plot = "silver" #Default background color for charts
@@ -25,13 +25,13 @@ image_resolution = 120
 language = 1 #0 = english, 1 = spanish
 legend_text_size = 8
 plot_scale = "linear"
-start_date = "2020-11-01"
-end_date = "2021-09-27"
-week_interval = 3
-v_start_date = "2021-01-01"
-v_week_interval = 2
-e_start_date = "2020-03-15"
-e_week_interval = 6
+start_date = "2021-09-05" #"2020-09-01"
+end_date = "2021-10-05"
+week_interval = 1 #3
+v_start_date = "2021-09-05" #"2021-01-01"
+v_week_interval = 1 #2
+e_start_date = "2021-09-05" #"2020-03-15"
+e_week_interval = 1 #6
 
 if language == 1:
 	date_format = mdates.DateFormatter("%d/%m")
