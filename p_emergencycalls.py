@@ -1,4 +1,3 @@
-import chart_config as cc
 import pandas as pd
 from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
@@ -8,10 +7,10 @@ calls_data = pd.read_csv("processed/emergencycalls.csv")
 calls_data["FECHA"] = pd.to_datetime(calls_data["FECHA"], format="%Y-%m-%d")
 calls_data.set_index("FECHA", inplace=True)
 
-def plot_total_calls():
+def plot_total_calls(cc):
 	print("-- Plotting total calls...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_calls_ratios_texts("total_calls");
+	chart_texts = get_calls_ratios_texts("total_calls", cc);
 	total = calls_data["COVID_LLAMADOS"][cc.start_date:cc.end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	cc.x_grid_and_ticks()
 	cc.ticks_locator(cc.week_interval)
@@ -25,10 +24,10 @@ def plot_total_calls():
 	cc.build_legends(total, other)
 	cc.save_plot("totalcalls", f, "C")
 
-def plot_total_calls_avg():
+def plot_total_calls_avg(cc):
 	print("-- Plotting total calls...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_calls_ratios_texts("total_calls");
+	chart_texts = get_calls_ratios_texts("total_calls", cc);
 	total = calls_data["LLAMADOSAVG"][cc.start_date:cc.end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	cc.x_grid_and_ticks()
 	cc.ticks_locator(cc.week_interval)
@@ -42,10 +41,10 @@ def plot_total_calls_avg():
 	cc.build_legends(total, other)
 	cc.save_plot("totalcallsavg", f, "C")
 
-def plot_calls_ratios(y_min, ticks_interval, ticks_divisor):
+def plot_calls_ratios(y_min, ticks_interval, ticks_divisor, cc):
 	print("-- Plotting calls ratios...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_calls_ratios_texts("calls_ratios");
+	chart_texts = get_calls_ratios_texts("calls_ratios", cc);
 	calls_data["%SOSPECHOSOS"][cc.start_date:cc.end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	calls_data["%TRASLADADOS"][cc.start_date:cc.end_date].plot(kind='line', label=chart_texts[4], color=cc.colors[1], linewidth=2.5)
 	calls_data["%DERIVADOS"][cc.start_date:cc.end_date].plot(kind='line', label=chart_texts[5], color=cc.colors[2], linewidth=2.5)
@@ -56,10 +55,10 @@ def plot_calls_ratios(y_min, ticks_interval, ticks_divisor):
 	cc.ticks_locator(cc.week_interval)
 	cc.save_plot("callsratios", f, "C")
 
-def plot_calls_ratios_avg(y_min, ticks_interval, ticks_divisor):
+def plot_calls_ratios_avg(y_min, ticks_interval, ticks_divisor, cc):
 	print("-- Plotting calls ratios...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_calls_ratios_texts("calls_ratios");
+	chart_texts = get_calls_ratios_texts("calls_ratios", cc);
 	calls_data["%SOSPECHOSOSAVG"][cc.start_date:cc.end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	calls_data["%TRASLADADOSAVG"][cc.start_date:cc.end_date].plot(kind='line', label=chart_texts[4], color=cc.colors[1], linewidth=2.5)
 	calls_data["%DERIVADOSAVG"][cc.start_date:cc.end_date].plot(kind='line', label=chart_texts[5], color=cc.colors[2], linewidth=2.5)
@@ -80,7 +79,7 @@ texts_dict_es = {"calls_ratios": ["COVID-19 CABA: Proporciones de llamados", "Ti
 				"total_calls": ["COVID-19 CABA: Llamados 107", "Tiempo en días", "Número de llamados",
 								"Total", "Sospechosos", "Derivados"]}
 
-def get_calls_ratios_texts(type):
+def get_calls_ratios_texts(type, cc):
 	texts = []
 	if cc.language == 0:
 		return texts_dict_en[type]

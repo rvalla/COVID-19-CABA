@@ -1,4 +1,3 @@
-import chart_config as cc
 import pandas as pd
 from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
@@ -25,10 +24,10 @@ reached_d = pd.read_csv("processed/vaccinationbyageanddose_reached.csv")
 reached_d["FECHA"] = pd.to_datetime(reached_d["FECHA"], format="%Y-%m-%d")
 reached_d.set_index("FECHA", inplace=True)
 
-def plot_total_vac_by_sex(y_min, ticks_interval, ticks_divisor):
+def plot_total_vac_by_sex(y_min, ticks_interval, ticks_divisor, cc):
 	print("-- Plotting total vaccinations by sex...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_chart_texts("total_by_sex")
+	chart_texts = get_chart_texts("total_by_sex", cc)
 	plot = plt.subplot2grid((1, 1), (0, 0))
 	plot = cum_age_sex["TotalM"][cc.v_start_date:cc.end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	plot = cum_age_sex["TotalF"][cc.v_start_date:cc.end_date].plot(kind='line', label=chart_texts[4], color=cc.colors[1], linewidth=2.5)
@@ -41,10 +40,10 @@ def plot_total_vac_by_sex(y_min, ticks_interval, ticks_divisor):
 	plt.tight_layout()
 	cc.save_plot("totalvaccinationsbysex", f, "V")
 
-def plot_total_vac_by_dose(y_min, ticks_interval, ticks_divisor):
+def plot_total_vac_by_dose(y_min, ticks_interval, ticks_divisor, cc):
 	print("-- Plotting total vaccinations by dose...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_chart_texts("total_by_dose")
+	chart_texts = get_chart_texts("total_by_dose", cc)
 	cum_age_dose["TotalA"][cc.v_start_date:cc.end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	cum_age_dose["TotalB"][cc.v_start_date:cc.end_date].plot(kind='line', label=chart_texts[4], color=cc.colors[1], linewidth=2.5)
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
@@ -54,10 +53,10 @@ def plot_total_vac_by_dose(y_min, ticks_interval, ticks_divisor):
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("totalvaccinationsbydose", f, "V")
 
-def plot_doses_by_age(y_min, ticks_interval, ticks_divisor):
+def plot_doses_by_age(y_min, ticks_interval, ticks_divisor, cc):
 	print("-- Plotting total vaccinations by age...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_chart_texts("by_age")
+	chart_texts = get_chart_texts("by_age", cc)
 	for i in range(len(age_groups)):
 		age_dose[age_groups[i]][cc.v_start_date:cc.end_date].plot(kind='line', label=age_groups[i], color=cc.colors[i], linewidth=2.5)
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
@@ -67,10 +66,10 @@ def plot_doses_by_age(y_min, ticks_interval, ticks_divisor):
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("vaccinationsbyage", f, "V")
 
-def plot_doses_by_age_avg(y_min, ticks_interval, ticks_divisor):
+def plot_doses_by_age_avg(y_min, ticks_interval, ticks_divisor, cc):
 	print("-- Plotting total vaccinations by age...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_chart_texts("by_age_avg")
+	chart_texts = get_chart_texts("by_age_avg", cc)
 	for i in range(len(age_groups)):
 		age_dose_avg[age_groups[i]][cc.v_start_date:cc.end_date].plot(kind='line', label=age_groups[i], color=cc.colors[i], linewidth=2.5)
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
@@ -80,10 +79,10 @@ def plot_doses_by_age_avg(y_min, ticks_interval, ticks_divisor):
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("vaccinationsbyageavg", f, "V")
 
-def plot_doses_by_vac_avg(y_min, ticks_interval, ticks_divisor):
+def plot_doses_by_vac_avg(y_min, ticks_interval, ticks_divisor, cc):
 	print("-- Plotting total vaccinations by vaccine...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_chart_texts("by_vac_avg")
+	chart_texts = get_chart_texts("by_vac_avg", cc)
 	for i in range(len(vaccines)):
 		vac_dose_avg[vaccines[i]][cc.v_start_date:cc.end_date].plot(kind='line', label=vaccines[i], color=cc.colors[i], linewidth=2.5)
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
@@ -93,10 +92,10 @@ def plot_doses_by_vac_avg(y_min, ticks_interval, ticks_divisor):
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("vaccinationsbyvac", f, "V")
 
-def plot_reached_population_by_age(y_min, ticks_interval, ticks_divisor):
+def plot_reached_population_by_age(y_min, ticks_interval, ticks_divisor, cc):
 	print("-- Plotting reached population by age...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_chart_texts("reached_age")
+	chart_texts = get_chart_texts("reached_age", cc)
 	for i in range(len(reached_age_g)):
 		reached_d[reached_age_g[i]][cc.v_start_date:cc.end_date].plot(kind='line', label=reached_age_g[i], color=cc.colors[i], linewidth=2.5)
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
@@ -106,10 +105,10 @@ def plot_reached_population_by_age(y_min, ticks_interval, ticks_divisor):
 	cc.ticks_locator(cc.v_week_interval)
 	cc.save_plot("reachedbyage", f, "V")
 
-def plot_reached_population_by_sex(ticks_interval, ticks_divisor):
+def plot_reached_population_by_sex(ticks_interval, ticks_divisor, cc):
 	print("-- Plotting reached population by age...", end="\n")
 	f = figure(num=None, figsize=(cc.w, cc.h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
-	chart_texts = get_chart_texts("reached_sex")
+	chart_texts = get_chart_texts("reached_sex", cc)
 	for i in range(len(reached_age_g)):
 		data = reached_s[reached_age_g[i] + "F"][cc.v_start_date:cc.end_date] - reached_s[reached_age_g[i] + "M"][cc.v_start_date:cc.end_date]
 		data[cc.v_start_date:cc.end_date].plot(kind='line', label=reached_age_g[i], color=cc.colors[i], linewidth=2.5)
@@ -145,7 +144,7 @@ age_groups = ["<=30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
 reached_age_g = ["<=30","31-40","41-50","51-60","61-70","71-80",">=81"]
 vaccines = ["Sputnik", "Sinopharm", "AstraZeneca", "Moderna", "Cansino", "Pfizer"]
 
-def get_chart_texts(type):
+def get_chart_texts(type, cc):
 	texts = []
 	if cc.language == 0:
 		return texts_dict_en[type]

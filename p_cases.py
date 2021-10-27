@@ -1,4 +1,3 @@
-import chart_config as cc
 import pandas as pd
 from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
@@ -27,11 +26,11 @@ for i in range(2):
 	d_byzone_cum[i]["FECHA"] = pd.to_datetime(d_byzone_cum[i]["FECHA"], format="%Y-%m-%d")
 	d_byzone_cum[i].set_index("FECHA", inplace=True)
 
-def plot_total_cases(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B):
+def plot_total_cases(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B, cc):
 	print("-- Plotting total cases...", end="\n")
 	f = figure(num=None, figsize=(cc.d_w, cc.d_h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
 	confirmed = plt.subplot2grid((2, 1), (0, 0))
-	chart_texts = get_chart_texts("total_confirmed")
+	chart_texts = get_chart_texts("total_confirmed", cc)
 	confirmed = d_byage_cum[0]["TotalM"][cc.e_start_date:cc.end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	confirmed = d_byage_cum[0]["TotalF"][cc.e_start_date:cc.end_date].plot(kind='line', label=chart_texts[4], color=cc.colors[1], linewidth=2.5)
 	confirmed = d_byage_cum[0]["Total"][cc.e_start_date:cc.end_date].plot(kind='line', label=chart_texts[5], color=cc.colors[2], linewidth=2.5)
@@ -43,7 +42,7 @@ def plot_total_cases(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_in
 	cc.ticks_locator(cc.e_week_interval)
 	plt.gca().xaxis.set_ticklabels([])
 	deaths = plt.subplot2grid((2, 1), (1, 0))
-	chart_texts = get_chart_texts("total_death")
+	chart_texts = get_chart_texts("total_death", cc)
 	deaths = d_byage_cum[1]["TotalM"][cc.e_start_date:cc.end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	deaths = d_byage_cum[1]["TotalF"][cc.e_start_date:cc.end_date].plot(kind='line', label=chart_texts[4], color=cc.colors[1], linewidth=2.5)
 	deaths = d_byage_cum[1]["Total"][cc.e_start_date:cc.end_date].plot(kind='line', label=chart_texts[5], color=cc.colors[2], linewidth=2.5)
@@ -54,12 +53,12 @@ def plot_total_cases(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_in
 	cc.ticks_locator(cc.e_week_interval)
 	cc.save_plot("totalcasesanddeaths_cum", f, "E")
 
-def plot_total_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B):
+def plot_total_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B, cc):
 	print("-- Plotting total cases...", end="\n")
 	new_end_date = pd.to_datetime(cc.end_date, format="%Y-%m-%d") - pd.Timedelta(days=7)
 	f = figure(num=None, figsize=(cc.d_w, cc.d_h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
 	confirmed = plt.subplot2grid((2, 1), (0, 0))
-	chart_texts = get_chart_texts("total_confirmed")
+	chart_texts = get_chart_texts("total_confirmed", cc)
 	confirmed = d_byage_avg[0]["TotalM"][cc.e_start_date:new_end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	confirmed = d_byage_avg[0]["TotalF"][cc.e_start_date:new_end_date].plot(kind='line', label=chart_texts[4], color=cc.colors[1], linewidth=2.5)
 	confirmed = d_byage_avg[0]["Total"][cc.e_start_date:new_end_date].plot(kind='line', label=chart_texts[5], color=cc.colors[2], linewidth=2.5)
@@ -71,7 +70,7 @@ def plot_total_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_inte
 	cc.ticks_locator(cc.e_week_interval)
 	plt.gca().xaxis.set_ticklabels([])
 	deaths = plt.subplot2grid((2, 1), (1, 0))
-	chart_texts = get_chart_texts("total_death")
+	chart_texts = get_chart_texts("total_death", cc)
 	deaths = d_byage_avg[1]["TotalM"][cc.e_start_date:new_end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	deaths = d_byage_avg[1]["TotalF"][cc.e_start_date:new_end_date].plot(kind='line', label=chart_texts[4], color=cc.colors[1], linewidth=2.5)
 	deaths = d_byage_avg[1]["Total"][cc.e_start_date:new_end_date].plot(kind='line', label=chart_texts[5], color=cc.colors[2], linewidth=2.5)
@@ -82,12 +81,12 @@ def plot_total_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_inte
 	cc.ticks_locator(cc.e_week_interval)
 	cc.save_plot("totalcasesanddeaths_avg", f, "E")
 
-def plot_cases_by_age_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B):
+def plot_cases_by_age_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B, cc):
 	print("-- Plotting cases by age...", end="\n")
 	new_end_date = pd.to_datetime(cc.end_date, format="%Y-%m-%d") - pd.Timedelta(days=7)
 	f = figure(num=None, figsize=(cc.d_w, cc.d_h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
 	confirmed = plt.subplot2grid((2, 1), (0, 0))
-	chart_texts = get_chart_texts("total_confirmed")
+	chart_texts = get_chart_texts("total_confirmed", cc)
 	for i in range(len(age_groups)):
 		confirmed = d_byage_avg[0][age_groups[i]][cc.start_date:new_end_date].plot(kind='line', label=age_groups[i], color=cc.a_colors[i], linewidth=2.5)
 	cc.build_texts(chart_texts[0], "", chart_texts[2])
@@ -98,7 +97,7 @@ def plot_cases_by_age_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, tic
 	cc.ticks_locator(cc.week_interval)
 	plt.gca().xaxis.set_ticklabels([])
 	deaths = plt.subplot2grid((2, 1), (1, 0))
-	chart_texts = get_chart_texts("total_death")
+	chart_texts = get_chart_texts("total_death", cc)
 	for i in range(len(age_groups)):
 		deaths = d_byage_avg[1][age_groups[i]][cc.start_date:new_end_date].plot(kind='line', label=age_groups[i], color=cc.a_colors[i], linewidth=2.5)
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
@@ -108,12 +107,12 @@ def plot_cases_by_age_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, tic
 	cc.ticks_locator(cc.week_interval)
 	cc.save_plot("totalcasesanddeathsbyage_avg", f, "E")
 
-def plot_cases_by_zone_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B):
+def plot_cases_by_zone_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B, cc):
 	print("-- Plotting cases by age...", end="\n")
 	new_end_date = pd.to_datetime(cc.end_date, format="%Y-%m-%d") - pd.Timedelta(days=7)
 	f = figure(num=None, figsize=(cc.d_w, cc.d_h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
 	confirmed = plt.subplot2grid((2, 1), (0, 0))
-	chart_texts = get_chart_texts("total_confirmed")
+	chart_texts = get_chart_texts("total_confirmed", cc)
 	for i in range(len(zone_keys)):
 		confirmed = d_byzone_avg[0][zone_keys[i]][cc.start_date:new_end_date].plot(kind='line', label=zone_keys[i], color=cc.colors[i], linewidth=2.5)
 	cc.build_texts(chart_texts[0], "", chart_texts[2])
@@ -124,7 +123,7 @@ def plot_cases_by_zone_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ti
 	cc.ticks_locator(cc.week_interval)
 	plt.gca().xaxis.set_ticklabels([])
 	deaths = plt.subplot2grid((2, 1), (1, 0))
-	chart_texts = get_chart_texts("total_death")
+	chart_texts = get_chart_texts("total_death", cc)
 	for i in range(len(age_groups)):
 		deaths = d_byzone_avg[1][zone_keys[i]][cc.start_date:new_end_date].plot(kind='line', label=zone_keys[i], color=cc.colors[i], linewidth=2.5)
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
@@ -134,12 +133,12 @@ def plot_cases_by_zone_avg(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ti
 	cc.ticks_locator(cc.week_interval)
 	cc.save_plot("totalcasesanddeathsbyzone_avg", f, "E")
 
-def plot_delay_evol(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B):
+def plot_delay_evol(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_interval_B, ticks_divisor_B, cc):
 	print("-- Plotting delays...", end="\n")
 	new_end_date = pd.to_datetime(cc.end_date, format="%Y-%m-%d") - pd.Timedelta(days=30)
 	f = figure(num=None, figsize=(cc.d_w, cc.d_h), dpi=cc.image_resolution, facecolor=cc.background_figure, edgecolor='k')
 	confirmed = plt.subplot2grid((2, 1), (0, 0))
-	chart_texts = get_chart_texts("total_confirmed_delay")
+	chart_texts = get_chart_texts("total_confirmed_delay", cc)
 	confirmed = d_byage_avg[0]["DelayAvg"][cc.start_date:new_end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	cc.build_axis_texts(confirmed, chart_texts[0], "", chart_texts[2])
 	s = plt.ylim()
@@ -148,7 +147,7 @@ def plot_delay_evol(y_minA, y_minB, ticks_interval_A, ticks_divisor_A, ticks_int
 	cc.ticks_locator(cc.week_interval)
 	plt.gca().xaxis.set_ticklabels([])
 	deaths = plt.subplot2grid((2, 1), (1, 0))
-	chart_texts = get_chart_texts("total_death_delay")
+	chart_texts = get_chart_texts("total_death_delay", cc)
 	deaths = d_byage_avg[1]["DelayAvg"][cc.start_date:new_end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	cc.build_axis_texts(deaths, chart_texts[0], chart_texts[1], chart_texts[2])
 	s = plt.ylim()
@@ -178,7 +177,7 @@ texts_dict_es = {"total_confirmed": ["COVID-19 CABA: Casos confirmados", "Tiempo
 age_groups = ["<=10", "11-20", "21-30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
 zone_keys = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"]
 
-def get_chart_texts(type):
+def get_chart_texts(type, cc):
 	texts = []
 	if cc.language == 0:
 		return texts_dict_en[type]
