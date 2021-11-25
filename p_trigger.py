@@ -32,7 +32,7 @@ vac.plot_reached_population_by_age(0, 0.25, 1, cc)
 vac.plot_reached_population_by_sex(0.1, 1, cc)
 
 #Building cases charts
-cases.plot_delay_evol(0, 0, 5, 5, 1, 1, cc)
+cases.plot_delay_evol(0, 0, 5, 5, 1, 5, cc)
 cases.plot_total_avg(0, 0, 1000, 1000, 15, 1, cc)
 cases.plot_total_cases(0, 0, 150000, 1000, 2500, 1000, cc)
 cases.plot_cases_by_age_avg(0, 0, 250, 1, 5, 1, cc)
@@ -41,7 +41,7 @@ cases.plot_cases_by_zone_avg(0, 0, 75, 2, 1, 1, cc)
 #Building analysis charts
 sis.plot_age_ratios(0, 0, 0.5, 1.0, 0.1, 0.25, cc)
 sis.plot_origin_ratios(0, 0, 1, 1, 0.25, 0.25, cc)
-sis.plot_sex_ratios(0.5, 0.5, 1, 1, 0.2, 0.2, cc)
+sis.plot_sex_ratios(0.2, 0.5, 0.7, 1, 0.2, 0.2, cc)
 sis.plot_deathrate_by_age(0, 1, cc)
 sis.plot_deathrate_by_sex_and_age(0.2, 1, 0.05, 0.25, cc)
 sis.plot_estimation_avg(0, 0, 2000, 1000, 3, 1, cc)
