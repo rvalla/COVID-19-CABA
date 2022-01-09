@@ -15,20 +15,20 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2021-12-21"
+end_date = "2022-01-04"
 period = pd.date_range(start_date, end_date)
-csv_lines = 21152
+csv_lines = 22204
 lines_step = 5000
-csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA"]
+csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA","DOSIS_3"]
 
 #Building blank dataframe for organizing data by age
 ages = ["<=30","31-40","41-50","51-60","61-70","71-80","81-90",">=91"]
 age_in = ["30 o menos","31 a 40","41 a 50","51 a 60","61 a 70","71 a 80","81 a 90","91 o mas"]
 age_k = {"30 o menos":"<=30","31 a 40":"31-40","41 a 50":"41-50","51 a 60":"51-60",
 			"61 a 70":"61-70","71 a 80":"71-80","81 a 90":"81-90","91 o mas":">=91"}
-age_c_d = ["TotalA","TotalB","Total","<=30A","<=30B","<=30","31-40A","31-40B","31-40","41-50A","41-50B","41-50",
-		"51-60A","51-60B","51-60","61-70A","61-70B","61-70","71-80A","71-80B","71-80","81-90A","81-90B","81-90",
-		">=91A",">=91B",">=91"]
+age_c_d = ["TotalA","TotalB","TotalC","Total","<=30A","<=30B","<=30C","<=30","31-40A","31-40B","31-40C","31-40",
+		"41-50A","41-50B","41-50C","41-50","51-60A","51-60B","51-60C","51-60","61-70A","61-70B","61-70C","61-70",
+		"71-80A","71-80B","71-80C","71-80","81-90A","81-90B","81-90C","81-90",">=91A",">=91B",">=91C",">=91"]
 age_c_s = ["TotalM","TotalF","Total","<=30M","<=30F","<=30","31-40M","31-40F","31-40","41-50M","41-50F","41-50",
 		"51-60M","51-60F","51-60","61-70M","61-70F","61-70","71-80M","71-80F","71-80","81-90M","81-90F","81-90",
 		">=91M",">=91F",">=91"]
@@ -91,7 +91,7 @@ def run():
 	steps = math.ceil(csv_lines/lines_step)
 	done_lines = 1
 	while step * lines_step < csv_lines:
-		print("-- Step " + str(step + 1) + " of " + str(steps) + " completed...", end="\r")
+		#print("-- Step " + str(step + 1) + " of " + str(steps) + " completed...", end="\r")
 		if done_lines + lines_step >= csv_lines - 1:
 			lines = csv_lines - done_lines - 1
 		else:
@@ -115,9 +115,9 @@ def process_data(vac_data):
 		by_vaccine(row, d_vac, date)
 
 def complete_data_sums():
-	data_sums(d_age_dose, ages, ["A","B"])
+	data_sums(d_age_dose, ages, ["A","B","C"])
 	data_sums(d_age_sex, ages, ["M","F"])
-	data_sums(d_vac, vaccines, ["A","B"])
+	data_sums(d_vac, vaccines, ["A","B","C"])
 
 def data_sums(in_df, in_c, in_l):
 	for c in in_c:
