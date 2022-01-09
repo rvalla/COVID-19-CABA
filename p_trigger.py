@@ -35,8 +35,8 @@ vac.plot_reached_population_by_sex(0.1, 1, cc)
 cases.plot_delay_evol(0, 0, 5, 1, 5, 1, cc)
 cases.plot_total_avg(0, 0, 1000, 1000, 15, 1, cc)
 cases.plot_total_cases(0, 0, 150000, 1000, 2500, 1000, cc)
-cases.plot_cases_by_age_avg(0, 0, 250, 1, 5, 1, cc)
-cases.plot_cases_by_zone_avg(0, 0, 75, 2, 1, 1, cc)
+cases.plot_cases_by_age_avg(0, 0, 500, 1, 5, 1, cc)
+cases.plot_cases_by_zone_avg(0, 0, 75, 1, 1, 1, cc)
 
 #Building analysis charts
 sis.plot_age_ratios(0, 0, 0.5, 1.0, 0.1, 0.25, cc)
@@ -50,11 +50,11 @@ sis.plot_estimation(0, 0, 500000, 1000000, 0.1, 1, cc)
 #Last 180 days...
 #Date configuration for general charts...
 cc.chart_path = "charts/last_180/"
-cc.start_date = "2021-06-21"
+cc.start_date = "2021-07-01"
 cc.week_interval = 3
-cc.v_start_date = "2021-06-21"
+cc.v_start_date = "2021-07-01"
 cc.v_week_interval = 3
-cc.e_start_date = "2021-06-21"
+cc.e_start_date = "2021-07-01"
 cc.e_week_interval = 3
 
 #Building emergency calls charts
@@ -66,9 +66,9 @@ vac.plot_doses_by_age_avg(0, 3000, 1000, cc)
 vac.plot_doses_by_vac_avg(0, 5000, 1000, cc)
 
 #Building cases charts
-cases.plot_total_avg(0, 0, 500, 1, 10, 1, cc)
-cases.plot_cases_by_age_avg(0, 0, 150, 1, 5, 1, cc)
-cases.plot_cases_by_zone_avg(0, 0, 25, 1, 5, 1, cc)
+cases.plot_total_avg(0, 0, 1500, 1, 10, 1, cc)
+cases.plot_cases_by_age_avg(0, 0, 500, 1, 5, 1, cc)
+cases.plot_cases_by_zone_avg(0, 0, 150, 1, 5, 1, cc)
 
 #Building analysis charts
 sis.plot_age_ratios(0, 0, 0.3, 1, 0.1, 0.25, cc)
@@ -76,11 +76,11 @@ sis.plot_age_ratios(0, 0, 0.3, 1, 0.1, 0.25, cc)
 #Last 90 days...
 #Date configuration for general charts...
 cc.chart_path = "charts/last_90/"
-cc.start_date = "2021-09-21"
+cc.start_date = "2021-10-01"
 cc.week_interval = 2
-cc.v_start_date = "2021-09-21"
+cc.v_start_date = "2021-10-01"
 cc.v_week_interval = 2
-cc.e_start_date = "2021-09-21"
+cc.e_start_date = "2021-10-01"
 cc.e_week_interval = 2
 
 #Building emergency calls charts
@@ -92,9 +92,9 @@ vac.plot_doses_by_age_avg(0, 3000, 1000, cc)
 vac.plot_doses_by_vac_avg(0, 5000, 1000, cc)
 
 #Building cases charts
-cases.plot_total_avg(0, 0, 200, 1, 2, 1, cc)
-cases.plot_cases_by_age_avg(0, 0, 50, 1, 1, 1, cc)
-cases.plot_cases_by_zone_avg(0, 0, 50, 1, 3, 1, cc)
+cases.plot_total_avg(0, 0, 1500, 1, 1, 1, cc)
+cases.plot_cases_by_age_avg(0, 0, 500, 1, 1, 1, cc)
+cases.plot_cases_by_zone_avg(0, 0, 150, 1, 1, 1, cc)
 
 #Building analysis charts
 sis.plot_age_ratios(0, 0, 0.3, 1, 0.1, 0.25, cc)
@@ -102,11 +102,11 @@ sis.plot_age_ratios(0, 0, 0.3, 1, 0.1, 0.25, cc)
 #Last 30 days...
 #Date configuration for general charts...
 cc.chart_path = "charts/last_30/"
-cc.start_date = "2021-11-21"
+cc.start_date = "2021-12-01"
 cc.week_interval = 1
-cc.v_start_date = "2021-11-21"
+cc.v_start_date = "2021-12-01"
 cc.v_week_interval = 1
-cc.e_start_date = "2021-11-21"
+cc.e_start_date = "2021-12-01"
 cc.e_week_interval = 1
 
 #Building emergency calls charts
@@ -118,9 +118,9 @@ vac.plot_doses_by_age_avg(0, 3000, 1000, cc)
 vac.plot_doses_by_vac_avg(0, 5000, 1000, cc)
 
 #Building cases charts
-cases.plot_total_avg(0, 0, 200, 1, 1, 1, cc)
-cases.plot_cases_by_age_avg(0, 0, 50, 1, 1, 1, cc)
-cases.plot_cases_by_zone_avg(0, 0, 25, 1, 1, 1, cc)
+cases.plot_total_avg(0, 0, 1500, 1, 1, 1, cc)
+cases.plot_cases_by_age_avg(0, 0, 500, 1, 1, 1, cc)
+cases.plot_cases_by_zone_avg(0, 0, 150, 1, 1, 1, cc)
 
 #Building analysis charts
 sis.plot_age_ratios(0, 0, 0.3, 1, 0.1, 0.25, cc)

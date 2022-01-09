@@ -46,6 +46,7 @@ def plot_total_vac_by_dose(y_min, ticks_interval, ticks_divisor, cc):
 	chart_texts = get_chart_texts("total_by_dose", cc)
 	cum_age_dose["TotalA"][cc.v_start_date:cc.end_date].plot(kind='line', label=chart_texts[3], color=cc.colors[0], linewidth=2.5)
 	cum_age_dose["TotalB"][cc.v_start_date:cc.end_date].plot(kind='line', label=chart_texts[4], color=cc.colors[1], linewidth=2.5)
+	cum_age_dose["TotalC"][cc.v_start_date:cc.end_date].plot(kind='line', label=chart_texts[5], color=cc.colors[2], linewidth=2.5)
 	cc.build_texts(chart_texts[0], chart_texts[1], chart_texts[2])
 	cc.build_legend()
 	s = plt.ylim()
@@ -123,7 +124,7 @@ def plot_reached_population_by_sex(ticks_interval, ticks_divisor, cc):
 texts_dict_en = {"total_by_sex": ["COVID-19 CABA: Vaccination champaign by sex", "Time in days", "Number of doses",
 								"Male", "Female", "Total"],
 				"total_by_dose": ["COVID-19 CABA: Vaccination champaign by dose", "Time in days", "Number of doses",
-												"Firts dose", "Second dose"],
+												"Firts dose", "Second dose", "Third dose"],
 				"by_age": ["COVID-19 CABA: Vaccination champaign by age", "Time in days", "Number of doses"],
 				"by_age_avg": ["COVID-19 CABA: Vaccination champaign by age (7 days)", "Time in days", "Number of doses"],
 				"reached_age": ["COVID-19 CABA: Reached population by age", "Time in days", "Populations %"],
@@ -133,7 +134,7 @@ texts_dict_en = {"total_by_sex": ["COVID-19 CABA: Vaccination champaign by sex",
 texts_dict_es = {"total_by_sex": ["COVID-19 CABA: Vacunación según género", "Tiempo en días", "Dosis administradas",
 								"Masculinos", "Femeninos", "Total"],
 				"total_by_dose": ["COVID-19 CABA: Vacunación según número de dosis", "Tiempo en días", "Dosis administradas",
-								"Primera dosis", "Segunda dosis"],
+								"Primera dosis", "Segunda dosis", "Tercera dosis"],
 				"by_age": ["COVID-19 CABA: Vacunación según edad", "Tiempo en días", "Dosis administradas"],
 				"by_age_avg": ["COVID-19 CABA: Vacunación según edad (7 días)", "Tiempo en días", "Dosis administradas"],
 				"reached_age": ["COVID-19 CABA: Población alcanzada por edad", "Tiempo en días", "% población alcanzada"],
