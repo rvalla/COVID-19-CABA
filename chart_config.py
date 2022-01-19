@@ -26,12 +26,12 @@ language = 1 #0 = english, 1 = spanish
 legend_text_size = 8
 plot_scale = "linear"
 start_date = "2020-03-15"
-end_date = "2022-01-05"
-week_interval = 6
+end_date = "2022-01-16"
+week_interval = 8
 v_start_date = "2021-01-01"
-v_week_interval = 3
+v_week_interval = 4
 e_start_date = "2020-03-15"
-e_week_interval = 6
+e_week_interval = 8
 
 if language == 1:
 	date_format = mdates.DateFormatter("%d/%m")
