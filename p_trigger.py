@@ -50,11 +50,11 @@ sis.plot_estimation(0, 0, 500000, 1000000, 0.1, 1, cc)
 #Last 180 days...
 #Date configuration for general charts...
 cc.chart_path = "charts/last_180/"
-cc.start_date = "2021-07-01"
+cc.start_date = "2021-08-01"
 cc.week_interval = 3
-cc.v_start_date = "2021-07-01"
+cc.v_start_date = "2021-08-01"
 cc.v_week_interval = 3
-cc.e_start_date = "2021-07-01"
+cc.e_start_date = "2021-08-01"
 cc.e_week_interval = 3
 
 #Building emergency calls charts
@@ -77,11 +77,11 @@ sis.plot_deathrate_by_sex_and_age(0, 0, 0.05, 0.2, cc)
 #Last 90 days...
 #Date configuration for general charts...
 cc.chart_path = "charts/last_90/"
-cc.start_date = "2021-10-01"
+cc.start_date = "2021-11-01"
 cc.week_interval = 2
-cc.v_start_date = "2021-10-01"
+cc.v_start_date = "2021-11-01"
 cc.v_week_interval = 2
-cc.e_start_date = "2021-10-01"
+cc.e_start_date = "2021-11-01"
 cc.e_week_interval = 2
 
 #Building emergency calls charts
@@ -93,9 +93,9 @@ vac.plot_doses_by_age_avg(0, 3000, 1000, cc)
 vac.plot_doses_by_vac_avg(0, 5000, 1000, cc)
 
 #Building cases charts
-cases.plot_total_avg(0, 0, 3000, 1, 2, 1, cc)
-cases.plot_cases_by_age_avg(0, 0, 1000, 1, 1, 1, cc)
-cases.plot_cases_by_zone_avg(0, 0, 300, 1, 1, 1, cc)
+cases.plot_total_avg(0, 0, 3000, 1, 5, 1, cc)
+cases.plot_cases_by_age_avg(0, 0, 1000, 1, 5, 1, cc)
+cases.plot_cases_by_zone_avg(0, 0, 300, 1, 5, 1, cc)
 
 #Building analysis charts
 sis.plot_age_ratios(0, 0, 0.3, 1, 0.1, 0.25, cc)
@@ -104,11 +104,11 @@ sis.plot_deathrate_by_sex_and_age(0, 0, 0.05, 0.2, cc)
 #Last 30 days...
 #Date configuration for general charts...
 cc.chart_path = "charts/last_30/"
-cc.start_date = "2021-12-01"
+cc.start_date = "2022-01-01"
 cc.week_interval = 1
-cc.v_start_date = "2021-12-01"
+cc.v_start_date = "2022-01-01"
 cc.v_week_interval = 1
-cc.e_start_date = "2021-12-01"
+cc.e_start_date = "2022-01-01"
 cc.e_week_interval = 1
 
 #Building emergency calls charts
@@ -120,9 +120,9 @@ vac.plot_doses_by_age_avg(0, 1000, 1000, cc)
 vac.plot_doses_by_vac_avg(0, 2000, 1000, cc)
 
 #Building cases charts
-cases.plot_total_avg(0, 0, 3000, 1, 2, 1, cc)
-cases.plot_cases_by_age_avg(0, 0, 1000, 1, 1, 1, cc)
-cases.plot_cases_by_zone_avg(0, 0, 300, 1, 1, 1, cc)
+cases.plot_total_avg(0, 0, 3000, 1, 5, 1, cc)
+cases.plot_cases_by_age_avg(0, 0, 1000, 1, 5, 1, cc)
+cases.plot_cases_by_zone_avg(0, 0, 300, 1, 5, 1, cc)
 
 #Building analysis charts
 sis.plot_age_ratios(0, 0, 0.3, 1, 0.1, 0.25, cc)
