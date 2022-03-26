@@ -15,10 +15,10 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2022-02-03"
+end_date = "2022-03-23"
 period = pd.date_range(start_date, end_date)
-csv_lines = 25612
-lines_step = 5000
+csv_lines = 30054
+lines_step = 6000
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA","DOSIS_3"]
 
 #Building blank dataframe for organizing data by age
@@ -63,6 +63,7 @@ vaccines = ["Sputnik", "Moderna", "Sinopharm", "AstraZeneca"]
 vac_in = {"Sputnik": "Sputnik", "Moderna": "Moderna", "Sinopharm": "Sinopharm",
 			"vacuna Coronavirus (CANSINO), vial x 1 dosis": "Cansino",
 			"vacuna Coronavirus (PFIZER) 1ra - 2da dosis, vial x 6 dosis (0.3ml)": "Pfizer",
+			"vacuna Coronavirus (PFIZER) pediátrica, vial x 10 dosis (0.2ml)": "Pfizer",
 			"AstraZeneca": "AstraZeneca"}
 vac_c = ["SputnikA", "SputnikB", "Sputnik", "ModernaA", "ModernaB", "Moderna", "PfizerA", "PfizerB", "Pfizer",
 			"SinopharmA", "SinopharmB", "Sinopharm", "AstraZenecaA", "AstraZenecaB", "AstraZeneca",

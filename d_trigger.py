@@ -1,4 +1,4 @@
-import d_emergencycalls as ecalls
+#import d_emergencycalls as ecalls
 import d_vaccinations as vac
 import d_cases as cases
 import d_analysis as analysis
@@ -13,7 +13,7 @@ print("---------------------------------------------", end="\n")
 cases.run()
 
 #Building data from emergency calls
-ecalls.run()
+#ecalls.run()
 
 #Building data from vaccination champaing dataset
 vac.run()
