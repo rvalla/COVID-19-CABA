@@ -1,4 +1,4 @@
-import p_emergencycalls as ecalls
+#import p_emergencycalls as ecalls
 import p_vaccinations as vac
 import p_cases as cases
 import p_analysis as sis
@@ -20,8 +20,8 @@ cc.e_start_date = "2020-03-15"
 cc.e_week_interval = 8
 
 #Building emergency calls charts
-ecalls.plot_calls_ratios_avg(0, 0.2, 1, cc)
-ecalls.plot_total_calls_avg(cc)
+#ecalls.plot_calls_ratios_avg(0, 0.2, 1, cc)
+#ecalls.plot_total_calls_avg(cc)
 
 #Building vaccination champaign charts
 vac.plot_total_vac_by_sex(0, 800000, 1000, cc)
@@ -58,8 +58,8 @@ cc.e_start_date = "2021-08-01"
 cc.e_week_interval = 3
 
 #Building emergency calls charts
-ecalls.plot_calls_ratios_avg(0, 0.025,1, cc)
-ecalls.plot_total_calls_avg(cc)
+#ecalls.plot_calls_ratios_avg(0, 0.025,1, cc)
+#ecalls.plot_total_calls_avg(cc)
 
 #Building vaccination champaign charts
 vac.plot_doses_by_age_avg(0, 3000, 1000, cc)
@@ -85,21 +85,21 @@ cc.e_start_date = "2021-11-01"
 cc.e_week_interval = 2
 
 #Building emergency calls charts
-ecalls.plot_calls_ratios_avg(0, 0.025,1, cc)
-ecalls.plot_total_calls_avg(cc)
+#ecalls.plot_calls_ratios_avg(0, 0.025,1, cc)
+#ecalls.plot_total_calls_avg(cc)
 
 #Building vaccination champaign charts
 vac.plot_doses_by_age_avg(0, 3000, 1000, cc)
 vac.plot_doses_by_vac_avg(0, 5000, 1000, cc)
 
 #Building cases charts
-cases.plot_total_avg(0, 0, 3000, 1, 5, 1, cc)
+cases.plot_total_avg(0, 0, 3000, 1, 10, 1, cc)
 cases.plot_cases_by_age_avg(0, 0, 1000, 1, 5, 1, cc)
-cases.plot_cases_by_zone_avg(0, 0, 300, 1, 5, 1, cc)
+cases.plot_cases_by_zone_avg(0, 0, 300, 1, 2, 1, cc)
 
 #Building analysis charts
 sis.plot_age_ratios(0, 0, 0.3, 1, 0.1, 0.25, cc)
-sis.plot_deathrate_by_sex_and_age(0, 0, 0.05, 0.2, cc)
+sis.plot_deathrate_by_sex_and_age(0, 0, 0.02, 0.1, cc)
 
 #Last 30 days...
 #Date configuration for general charts...
@@ -112,17 +112,17 @@ cc.e_start_date = "2022-01-01"
 cc.e_week_interval = 1
 
 #Building emergency calls charts
-ecalls.plot_calls_ratios_avg(0, 0.025,1, cc)
-ecalls.plot_total_calls_avg(cc)
+#ecalls.plot_calls_ratios_avg(0, 0.025,1, cc)
+#ecalls.plot_total_calls_avg(cc)
 
 #Building vaccination champaign charts
 vac.plot_doses_by_age_avg(0, 1000, 1000, cc)
 vac.plot_doses_by_vac_avg(0, 2000, 1000, cc)
 
 #Building cases charts
-cases.plot_total_avg(0, 0, 3000, 1, 5, 1, cc)
+cases.plot_total_avg(0, 0, 3000, 1, 15, 1, cc)
 cases.plot_cases_by_age_avg(0, 0, 1000, 1, 5, 1, cc)
-cases.plot_cases_by_zone_avg(0, 0, 300, 1, 5, 1, cc)
+cases.plot_cases_by_zone_avg(0, 0, 300, 1, 2, 1, cc)
 
 #Building analysis charts
 sis.plot_age_ratios(0, 0, 0.3, 1, 0.1, 0.25, cc)
