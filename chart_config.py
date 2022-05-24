@@ -26,7 +26,7 @@ language = 1 #0 = english, 1 = spanish
 legend_text_size = 8
 plot_scale = "linear"
 start_date = "2020-03-15"
-end_date = "2022-03-23"
+end_date = "2022-05-21"
 week_interval = 8
 v_start_date = "2021-01-01"
 v_week_interval = 4
@@ -95,7 +95,6 @@ def ticks_locator(weekInterval):
 	plt.gca().xaxis.set_minor_locator(tk.AutoMinorLocator(7))
 	plt.gca().xaxis.set_major_formatter(date_format)
 	plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator(interval = weekInterval))
-
 	plt.gca().xaxis.set_minor_formatter(tk.NullFormatter())
 
 def get_simetrical_limits(y_min, y_max):
