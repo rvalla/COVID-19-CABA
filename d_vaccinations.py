@@ -15,10 +15,10 @@ demographics.set_index("Age", inplace=True)
 
 #Setting time period
 start_date = "2020-12-29"
-end_date = "2022-03-23"
+end_date = "2022-05-21"
 period = pd.date_range(start_date, end_date)
-csv_lines = 30054
-lines_step = 6000
+csv_lines = 33836
+lines_step = 6500
 csv_columns = ["FECHA_ADMINISTRACION","GRUPO_ETARIO","GENERO","VACUNA","TIPO_EFECTOR","DOSIS_1","DOSIS_2","ID_CARGA","DOSIS_3"]
 
 #Building blank dataframe for organizing data by age
